@@ -6,7 +6,7 @@ import ChatBody from "./components/chatBody/ChatBody";
 function App() {
   return (
     <div className="__main">
-      <Nav />
+      {/* <Nav /> */}
       <ChatBody />
     </div>
   );
