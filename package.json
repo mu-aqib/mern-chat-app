@@ -1,0 +1,22 @@
+{
+  "name": "lets-chat",
+  "version": "1.0.0",
+  "description": "React chat application with socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mu-aqib/mern-chat-app.git"
+  },
+  "author": "Muhammad Aqib",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mu-aqib/mern-chat-app/issues"
+  },
+  "homepage": "https://github.com/mu-aqib/mern-chat-app#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
