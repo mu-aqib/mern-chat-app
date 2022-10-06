@@ -1,10 +1,50 @@
 import React, { Component } from 'react'
 
 export default class register extends Component {
-  render() {
-    return (
-        <>
-            {/* <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="800px" height="600px" viewBox="0 0 800 600" enable-background="new 0 0 800 600" xml:space="preserve">
+    state = {
+        username : '',
+        email : '',
+        password : '',
+        confirm_password : '' 
+    }
+
+    onChangeValue = (e)=> {
+        console.log(e.target.name)
+        this.setState( {
+            [e.target.name] : e.target.value
+        } )
+
+        // console.log(this.state.username);
+    }
+
+    render() {
+        const { email } = this.state;
+        return (
+            <>
+                <h1>{email}</h1>
+                <div class='form-box'>
+                    <h2>Register</h2>
+                    <form>
+                        <input name='username' type="text" placeholder="username" onChange={this.onChangeValue}/>
+
+                        <input name='email' type="email" placeholder="email" onChange={this.onChangeValue}/>
+            
+                        <input name='password' type="password" placeholder="password" onChange={this.onChangeValue}/>
+
+                        <input name='confirm_password' type="password" placeholder="confirm password" onChange={this.onChangeValue}/>
+
+                        <input name='user_profile' type="file" className='file-btn' />
+
+                        <button type='submit' class="btn btn-info"> <span>login</span> </button>
+                    </form>
+                </div>
+            </>
+        )
+    }
+}
+
+
+{/* <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="800px" height="600px" viewBox="0 0 800 600" enable-background="new 0 0 800 600" xml:space="preserve">
                 <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="174.7899" y1="186.34" x2="330.1259" y2="186.34" gradientTransform="matrix(0.8538 0.5206 -0.5206 0.8538 147.9521 -79.1468)">
                     <stop offset="0" style="stop-color:#FFC035" />
                     <stop offset="0.221" style="stop-color:#F9A639" />
@@ -32,25 +72,4 @@ export default class register extends Component {
                     <stop offset="1" style="stop-color:#DF3D8E" />
                 </linearGradient>
                 <circle fill="url(#SVGID_5_)" cx="435.095" cy="184.986" r="63.504" />
-            </svg> */}
-
-                <div class='form-box'>
-                    <h2>Register</h2>
-                    <form>
-                        <input type="text" placeholder="username" />
-
-                        <input type="email" placeholder="email" />
-            
-                        <input type="password" placeholder="password" />
-
-                        <input type="password" placeholder="confirm password" />
-
-                        <input type="file" className='file-btn' placeholder="confirm password" />
-
-                        <button type='submit' class="btn btn-info"> <span>login</span> </button>
-                    </form>
-                </div>
-        </>
-    )
-  }
-}
+</svg> */}

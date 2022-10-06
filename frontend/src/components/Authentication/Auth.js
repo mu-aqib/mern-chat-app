@@ -5,7 +5,7 @@ import Register from './Register';
 
 export default class login extends Component {
     state = {
-        selected: 'login',
+        selected: 'register',
     };
 
     handleChange(index) {
