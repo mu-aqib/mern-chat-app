@@ -30,6 +30,12 @@
     margin: 0 auto 10px;
     border: none;
     background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-family: "Open Sans", sans-serif;
+    color: #858585;
+    font-weight: lighter;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
   }
   input::placeholder {
     -webkit-transition: 0.5s;
@@ -39,16 +45,6 @@
     color: #ff5722;
     outline: none;
     border: 1px solid #ff5722;
-  }
-  
-  .email,
-  .pwd {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    font-family: "Open Sans", sans-serif;
-    color: #858585;
-    font-weight: lighter;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
   }
   
 

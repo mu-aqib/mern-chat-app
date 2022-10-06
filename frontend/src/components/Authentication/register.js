@@ -37,11 +37,15 @@ export default class register extends Component {
                 <div class='form-box'>
                     <h2>Register</h2>
                     <form>
-                        <input type="text" class="email" placeholder="username" />
+                        <input type="text" placeholder="username" />
 
-                        <input type="email" class="email" placeholder="email" />
+                        <input type="email" placeholder="email" />
             
-                        <input type="password" class="pwd" placeholder="password" />
+                        <input type="password" placeholder="password" />
+
+                        <input type="password" placeholder="confirm password" />
+
+                        <input type="file" className='file-btn' placeholder="confirm password" />
 
                         <button type='submit' class="btn btn-info"> <span>login</span> </button>
                     </form>
