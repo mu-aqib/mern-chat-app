@@ -4,7 +4,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 // defiened components
 import ChatBody from "./components/chatBody/ChatBody";
-import Authentication from "./components/Authentication/login";
+import Authentication from "./components/Authentication/Auth";
 
 function App() {
   return (

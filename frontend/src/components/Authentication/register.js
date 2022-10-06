@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './auth.css'
 
 export default class register extends Component {
   render() {
@@ -34,26 +33,19 @@ export default class register extends Component {
                 </linearGradient>
                 <circle fill="url(#SVGID_5_)" cx="435.095" cy="184.986" r="63.504" />
             </svg> */}
-            <div class="form-container">
-                <div class='btn-box'>
-                    <button class="signin">
-                        <span>sign in</span>
-                    </button>
-                    <button class="register active">
-                        <span>register</span>
-                    </button>
-                </div>
+
                 <div class='form-box'>
-                    <h2>login</h2>
+                    <h2>Register</h2>
                     <form>
-                        <input type="text" class="email" placeholder="email" />
+                        <input type="text" class="email" placeholder="username" />
+
+                        <input type="email" class="email" placeholder="email" />
             
-                        <input type="text" class="pwd" placeholder="password" />
+                        <input type="password" class="pwd" placeholder="password" />
 
                         <button type='submit' class="btn btn-info"> <span>login</span> </button>
                     </form>
                 </div>
-            </div>
         </>
     )
   }
