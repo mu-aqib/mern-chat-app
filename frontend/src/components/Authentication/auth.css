@@ -5,17 +5,21 @@
     left: 180px;
   }
   
-  .form-box {
-    width: 50%;
+  .form-container {
+    width: 40%;
     margin: auto;
+  }
+
+  .form-box {
     background: #f0f0f0;
-    padding: 20px 20px 0;
+    padding: 20px;
   }
   
   h2 {
     padding: 10px;
     font-weight: lighter;
     text-transform: uppercase;
+    font-size: 3.4rem;
     color: #414141;
   }
   
@@ -53,11 +57,12 @@
     justify-content: space-between;
   }
   
+  
   button {
     cursor: pointer;
     display: inline-block;
-    width: 48%;
-    padding-block: 10px;
+    width: 50%;
+    padding-block: 20px;
     border: none;
     font-family: "Open Sans", sans-serif;
     text-transform: uppercase;
@@ -65,51 +70,30 @@
     -webkit-transition: 0.5s;
     transition: 0.5s;
   }
-  button:nth-of-type(1) {
+
+  /* .btn-box button:nth-of-type(1) {
     background: #673ab7;
   }
-  button:nth-of-type(2) {
+  .btn-box button:nth-of-type(2) {
     background: #ff5722;
+  } */
+
+  .btn-box button{
+    background-color: #8169ab;
   }
-  button span {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
+
+  .btn-box button.active{
+    background-color: #673ab7;
   }
-  button:hover span {
-    -webkit-transform: translateX(30px);
-    transform: translateX(30px);
+
+  button:hover {
+    opacity: 0.9;
   }
-  
-  .reg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    -webkit-transform: translateY(-100%) scale(1);
-    transform: translateY(-100%) scale(1);
-    display: block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50px;
-    background: #673ab7;
-    z-index: 5;
-    -webkit-transition: 0.8s ease-in-out;
-    transition: 0.8s ease-in-out;
+
+  .btn span{
+    margin: auto;
   }
-  
-  .sig {
-    position: absolute;
-    top: 0;
-    right: 0;
-    -webkit-transform: translateY(-100%) scale(1);
-    transform: translateY(-100%) scale(1);
-    display: block;
-    width: 20px;
-    height: 20px;
-    display: block;
-    background: #ff5722;
-    z-index: 5;
-    -webkit-transition: 0.8s ease-in-out;
-    transition: 0.8s ease-in-out;
+  .btn-info{
+    margin: 20px auto 0;
+    background-color: #09229f;
   }
