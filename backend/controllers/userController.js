@@ -1,7 +1,9 @@
-const { json } = require('express');
-const userModal = require('../modal/userModal')
+const asyncHandler = require('express-async-handler');
+const userModal = require('../modal/userModal');
+const generateJWTToken = require('../config/generatToken');
 
-const userRegistration = async (req, res) => {
+
+const userRegistration = asyncHandler(async (req, res) => {
     // console.log(req.body);
     const { name, email, password, pic } = req.body;
 
@@ -25,16 +27,18 @@ const userRegistration = async (req, res) => {
     })
 
     if(user){
+        console.log(user.pic)
         res.status(201).json({
             _id: user._id,
             name: user.name,
             email: user.email,
-            pic: user.pic
+            pic: user.pic,
+            token: generateJWTToken(user._id)
         })
     }else{
-        res.status(400);
+        res.status(400); 
         throw new Error('user not create.')
     }
-}
+})
 
 module.exports = { userRegistration }
