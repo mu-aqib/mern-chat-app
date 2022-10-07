@@ -8,13 +8,14 @@ const user = mongoose.Schema({
         email: {
             type: String,
             require: true,
+            unique: true
         },
         password: {
             type: String,
             require: true,
         },
         picture: {
-            type: String, require: true, default: "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png"
+            type: String, default: "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png"
         }
     },
     {
