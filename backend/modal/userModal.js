@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const user = mongoose.Schema({
+const userSchema = mongoose.Schema({
         name: {
             type: String,
             require: true,
@@ -23,5 +24,17 @@ const user = mongoose.Schema({
     }
 )
 
-const User = mongoose.model("User", user);
+// middle ware which execute before saving schema execution response
+userSchema.pre('save', async function (next){
+    if(!this.modified){
+        console.log(this, "userschema middleware save ")
+        next();
+    }
+    
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    console.log(this.password, "model password")
+})
+
+const User = mongoose.model("User", userSchema);
 module.exports = User;

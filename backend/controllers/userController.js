@@ -2,16 +2,17 @@ const asyncHandler = require('express-async-handler');
 const userModal = require('../modal/userModal');
 const generateJWTToken = require('../config/generatToken');
 
-
+// registration function
 const userRegistration = asyncHandler(async (req, res) => {
     // console.log(req.body);
-    const { name, email, password, pic } = req.body;
+    const { name, email, password } = req.body;
 
     if(!name || !email || !password){
         res.status(400);
         throw new Error("Fill all fields");
     }
 
+    // find email if it is exist or not 
     const isUserExist = await userModal.findOne( {email} );
 
     if(isUserExist){
@@ -22,17 +23,14 @@ const userRegistration = asyncHandler(async (req, res) => {
     const user = await userModal.create({
         name,
         email,
-        password,
-        pic
+        password
     })
 
     if(user){
-        // console.log(user.pic)
         res.status(201).json({
             _id: user._id,
-            name: user.name,
             email: user.email,
-            pic: user.pic,
+            name: user.name,
             token: generateJWTToken(user._id)
         })
     }else{
@@ -41,4 +39,24 @@ const userRegistration = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { userRegistration }
+// login function 
+const userLogin = asyncHandler(async (req, res)=>{
+    const { email, password } = req.body;
+
+    const user = await userModal.findOne( {email} )
+
+    if(user && password){
+        res.json({
+            _id: user._id,
+            email: user.email,
+            name: user.name,
+            token: generateJWTToken(user._id)
+        })
+    }
+    else{
+        res.status(400); 
+        throw new Error('user not create.')
+    }
+})
+
+module.exports = { userRegistration, userLogin } 
