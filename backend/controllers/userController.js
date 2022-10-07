@@ -45,7 +45,7 @@ const userLogin = asyncHandler(async (req, res)=>{
 
     const user = await userModal.findOne( {email} )
 
-    if(user && password){
+    if(user && user.matchPass(password)){
         res.json({
             _id: user._id,
             email: user.email,
@@ -55,7 +55,7 @@ const userLogin = asyncHandler(async (req, res)=>{
     }
     else{
         res.status(400); 
-        throw new Error('user not create.')
+        throw new Error('user not available.')
     }
 })
 
