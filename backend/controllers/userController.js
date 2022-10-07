@@ -27,7 +27,7 @@ const userRegistration = asyncHandler(async (req, res) => {
     })
 
     if(user){
-        console.log(user.pic)
+        // console.log(user.pic)
         res.status(201).json({
             _id: user._id,
             name: user.name,
