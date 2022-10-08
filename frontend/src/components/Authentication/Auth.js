@@ -46,18 +46,7 @@ export default class login extends Component {
                     </linearGradient>
                     <circle fill="url(#SVGID_5_)" cx="435.095" cy="184.986" r="63.504" />
                 </svg> */}
-                {/* {this.props.children.map((elem, index) => {
-                    let style = index === this.state.selected ? "selected" : "";
-                    return (
-                    <li
-                        key={index}
-                        className={style}
-                        onClick={() => this.handleChange(index)}
-                    >
-                        {elem.props.title}
-                    </li>
-                    );
-                })} */}
+
                 
                 <div className="form-container">
                     <div className='btn-box'>
@@ -69,7 +58,9 @@ export default class login extends Component {
                         </button>
                     </div>
                     {/* consitional rendering of forms */}
-                    { this.state.selected == 'login' ? ( <Login /> )  :  ( <Register /> )}
+                    <div className='auth' >
+                        { this.state.selected == 'login' ? ( <Login /> )  :  ( <Register /> )}
+                    </div>
                     
                 </div>
             </>

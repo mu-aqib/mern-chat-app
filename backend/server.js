@@ -12,6 +12,11 @@ app.use(express.json())
 // use useUserRoute as middleware for registration and login
 app.use('/api/user', useUserRoute);
 
+
+// Error Handling middlewares
+app.use(notFound);
+app.use(errorHandler);
+
 app.get('/', (req, res)=>{
     res.send("Welcome to home page")
 } )

@@ -15,7 +15,7 @@
     padding: 20px;
   }
   
-  h2 {
+  .auth h2 {
     padding: 10px;
     font-weight: lighter;
     text-transform: uppercase;
@@ -23,7 +23,7 @@
     color: #414141;
   }
   
-  input {
+  .auth input {
     display: block;
     width: 100%;
     padding: 20px 10px;
@@ -37,11 +37,11 @@
     -webkit-transition: 0.5s;
     transition: 0.5s;
   }
-  input::placeholder {
+  .auth input::placeholder {
     -webkit-transition: 0.5s;
     transition: 0.5s;
   }
-  input:hover, input:focus, input:active:focus {
+  .auth input:hover, .auth input:focus, .auth input:active:focus {
     color: #ff5722;
     outline: none;
     border: 1px solid #ff5722;
@@ -54,7 +54,7 @@
   }
   
   
-  button {
+  .btn-box button {
     cursor: pointer;
     display: inline-block;
     width: 50%;

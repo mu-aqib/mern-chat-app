@@ -1,8 +1,11 @@
 .main__chatcontent {
   flex-grow: 1;
-  padding: 20px 40px;
+  padding: 20px 40px 0;
   max-width: 63%;
   border-right: 1px solid #ebe7fb;
+
+  display: flex;
+  flex-direction: column;
 }
 .content__header {
   padding-bottom: 15px;
@@ -25,7 +28,7 @@
   color: #000;
 }
 .content__body {
-  max-height: calc(100vh - calc(100vh / 2));
+  max-height: 57vh;
   overflow: auto;
 }
 .chat__item {
@@ -103,7 +106,7 @@
   color: #d1d1d1;
 }
 .content__footer {
-  padding-top: 30px;
+  margin-top: auto;
 }
 .sendNewMessage {
   background-color: #fff;
