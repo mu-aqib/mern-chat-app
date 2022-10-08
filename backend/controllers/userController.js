@@ -41,12 +41,9 @@ const userRegistration = asyncHandler(async (req, res) => {
 const userLogin = asyncHandler(async (req, res)=>{
     const { email, password } = req.body;
 
-    console.log(password, email)
-
     const user = await userModal.findOne( {email} )
 
-    if(user && user.matchPass(password)){
-        console.log("log in")
+    if(user && await user.matchPass(password)){
         res.json({
             _id: user._id,
             email: user.email,
