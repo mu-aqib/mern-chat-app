@@ -29,10 +29,7 @@ const userRegistration = asyncHandler(async (req, res) => {
 
     if(user){
         res.status(201).json({
-            _id: user._id,
-            email: user.email,
-            name: user.name,
-            token: generateJWTToken(user._id)
+            message: "User Registered Successfully"
         })
     }else{
         res.status(400); 

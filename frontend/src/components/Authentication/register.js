@@ -62,14 +62,16 @@ export default class register extends Component {
                 header: {"Content-type": "application/json",}
             }
 
-            let response = await axios.post('api/user', {
+            let {data} = await axios.post('api/user', {
                     name: state.username,
                     email: state.email,
                     password: state.password,
                     picture: state.user_profile
             } , config)
 
-            console.log(response);
+            if(data){
+                alert(data.message)
+            }
         }
         catch(err){
             console.log(err)
@@ -77,10 +79,8 @@ export default class register extends Component {
     }
 
     render() {
-        const { email } = this.state;
         return (
             <>
-                <h1>{email}</h1>
                 <div className='form-box'>
                     <h2>Register</h2>
                     <form onSubmit={this.submitHandler}>
