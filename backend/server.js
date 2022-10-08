@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const dbConnection = require('./config/db');
 
 const useUserRoute = require('./routes/userRoutes')
+const { notFound, errorHandler } = require('./middleware/errMiddleware')
 
 dotenv.config();
 dbConnection();

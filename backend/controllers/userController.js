@@ -5,7 +5,7 @@ const generateJWTToken = require('../config/generatToken');
 // registration function
 const userRegistration = asyncHandler(async (req, res) => {
     // console.log(req.body);
-    const { name, email, password } = req.body;
+    const { name, email, password, picture } = req.body;
 
     if(!name || !email || !password){
         res.status(400);
@@ -23,7 +23,8 @@ const userRegistration = asyncHandler(async (req, res) => {
     const user = await userModal.create({
         name,
         email,
-        password
+        password,
+        picture
     })
 
     if(user){

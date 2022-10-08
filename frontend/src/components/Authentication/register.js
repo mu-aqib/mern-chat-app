@@ -1,20 +1,79 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 
 export default class register extends Component {
-    state = {
-        username : '',
-        email : '',
-        password : '',
-        confirm_password : '' 
+    constructor(props){
+        super(props)
+        this.state = {
+            username : '',
+            email : '',
+            password : '',
+            confirm_password : '',
+            user_profile: undefined,
+        }
     }
 
+    // update given different states
     onChangeValue = (e)=> {
-        console.log(e.target.name)
         this.setState( {
             [e.target.name] : e.target.value
         } )
+    }
 
-        // console.log(this.state.username);
+    // file upload
+    fileUpload = (e)=>{
+        const file = e.target.files[0]
+        if(file){
+            if(file.type === "image/jpeg" || file.type === "image/png"){
+                const data = new FormData();
+                data.append('file', file);
+                data.append('upload_preset', 'chat-app')
+                data.append('cloudinary_name', 'cloudymedia313');
+                fetch(`https://api.cloudinary.com/v1_1/cloudymedia313/image/upload`, {
+                    method: 'post',
+                    body: data,
+                })
+                .then(res => res.json() )
+                .then(data => {
+                    this.setState({ user_profile : data.url })
+                } )
+                .catch(err => console.log(err))
+            }
+        }
+        else{
+            alert('file not defined')
+        }
+    }
+
+    submitHandler = async (e)=> {
+        e.preventDefault();
+        const state = this.state;
+        if(!state.username||!state.email||!state.password||!state.confirm_password) {
+            alert('please fill all required (*) field'); 
+            return
+        }
+        if(state.password != state.confirm_password) {
+            alert("passwords not matched");
+            return;
+        }
+
+        try{
+            const config = {
+                header: {"Content-type": "application/json",}
+            }
+
+            let response = await axios.post('api/user', {
+                    name: state.username,
+                    email: state.email,
+                    password: state.password,
+                    picture: state.user_profile
+            } , config)
+
+            console.log(response);
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
     render() {
@@ -22,20 +81,20 @@ export default class register extends Component {
         return (
             <>
                 <h1>{email}</h1>
-                <div class='form-box'>
+                <div className='form-box'>
                     <h2>Register</h2>
-                    <form>
-                        <input name='username' type="text" placeholder="username" onChange={this.onChangeValue}/>
+                    <form onSubmit={this.submitHandler}>
+                        <input name='username' type="text" placeholder="username *" onChange={this.onChangeValue}/>
 
-                        <input name='email' type="email" placeholder="email" onChange={this.onChangeValue}/>
+                        <input name='email' type="email" placeholder="email *" onChange={this.onChangeValue}/>
             
-                        <input name='password' type="password" placeholder="password" onChange={this.onChangeValue}/>
+                        <input name='password' type="password" placeholder="password *" onChange={this.onChangeValue}/>
 
-                        <input name='confirm_password' type="password" placeholder="confirm password" onChange={this.onChangeValue}/>
+                        <input name='confirm_password' type="password" placeholder="confirm password *" onChange={this.onChangeValue}/>
 
-                        <input name='user_profile' type="file" className='file-btn' />
+                        <input type="file" className='file-btn' onChange={this.fileUpload} />
 
-                        <button type='submit' class="btn btn-info"> <span>login</span> </button>
+                        <button type='submit' className="btn btn-info"> <span>login</span> </button>
                     </form>
                 </div>
             </>
