@@ -1,24 +1,21 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
-export default class login extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      email : '',
-      password : ''
-    }
+function Login() {
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  let navigate = useNavigate();
+
+  const onChangeValue = (e)=> {
+    this.setState( {
+      [e.target.name] : e.target.value
+    })
   }
-      // update given different states
-    onChangeValue = (e)=> {
-      this.setState( {
-        [e.target.name] : e.target.value
-      })
-    }
 
-
-  submitHandler = async (e)=> {
+  const submitHandler = async (e)=> {
     e.preventDefault();
+    alert();
     const state = this.state;
     if(!state.email || !state.password) {
         alert('please fill all required (*) field'); 
@@ -36,28 +33,29 @@ export default class login extends Component {
         } , config)
 
         if(data){
-            alert(data.message)
-            console.log(data)
+          navigate('/chat')
         }
     }
     catch(err){
         console.log(err)
     }
   }
-  render() {
-    return (
-        <>
-          <div className='form-box'>
-              <h2>login</h2>
-              <form onSubmit={this.submitHandler}>
-                <input name='email' type="email" placeholder="email *" onChange={this.onChangeValue}/>
-              
-                <input name='password' type="password" placeholder="password *" onChange={this.onChangeValue}/>
 
-                <button type='submit' className="btn btn-info"> <span>login</span> </button>
-              </form>
-          </div>
-        </>
-    )
-  }
+  return (
+    <div>
+      <div className='form-box'>
+        <h2>login</h2>
+        <form onSubmit={(e) => submitHandler(e)}>
+          <input name='email' type="email" placeholder="email *" onChange={(e) => onChangeValue(e)}/>
+        
+          <input name='password' type="password" placeholder="password *" onChange={(e) => onChangeValue(e)}/>
+
+          <button type='submit' className="btn btn-info"> <span>login</span> </button>
+        </form>
+      </div>
+    </div>
+  )
 }
+
+export default Login
+

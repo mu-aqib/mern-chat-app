@@ -11,10 +11,10 @@ function App() {
       <div className="__main">
         <Router>
           <Routes>
-              <Route path="/" element={ 
-                <Authentication />
-              } />
-              <Route path="/chat" element={ <ChatBody /> } />
+            <Route path="/" element={ 
+              <Authentication />
+            } />
+            <Route path="/chat" element={ <ChatBody /> } />
           </Routes>
         </Router>
       </div>
