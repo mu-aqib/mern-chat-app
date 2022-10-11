@@ -40,7 +40,6 @@ const userRegistration = asyncHandler(async (req, res) => {
 // login function 
 const userLogin = asyncHandler(async (req, res)=>{
     const { email, password } = req.body;
-
     const user = await userModal.findOne( {email} )
 
     if(user && await user.matchPass(password)){
@@ -58,4 +57,18 @@ const userLogin = asyncHandler(async (req, res)=>{
     }
 })
 
-module.exports = { userRegistration, userLogin } 
+const getAllUsers = asyncHandler( async (req, res)=>{
+    const keyword = req.query.filter 
+    ?   {
+            $or : [
+                { name: { $regex: req.query.filter, $options: 'i' } },
+                { email: { $regex: req.query.filter, $options: 'i' } } 
+            ]
+        }
+    :   {};
+    // const users = await userModal.find(keyword).find({_id: {$ne: }});
+    
+    res.send("users")
+} )
+
+module.exports = { userRegistration, userLogin, getAllUsers } 
