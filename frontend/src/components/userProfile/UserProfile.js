@@ -15,7 +15,8 @@ export default class UserProfile extends Component {
           <h4>Fernando Faucho</h4>
           <p>CEO & Founder at Highly Inc</p>
         </div>
-        <div className="profile__card">
+        
+        {/* <div className="profile__card">
           <div className="card__header" onClick={this.toggleInfo}>
             <h4>Information</h4>
             <i className="fa fa-angle-down"></i>
@@ -24,7 +25,7 @@ export default class UserProfile extends Component {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
             ultrices urna a imperdiet egestas. Donec in magna quis ligula
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

@@ -25,7 +25,7 @@ function Login() {
       } , config)
 
       if(data){
-        alert();
+        localStorage.setItem('userInfo', JSON.stringify(data));
         navigate('/chat')
       }
     }
@@ -45,6 +45,7 @@ function Login() {
 
           <button type='submit' className="btn btn-info"> <span>login</span> </button>
         </form>
+        {/* 03409075113 */}
       </div>
     </div>
   )
