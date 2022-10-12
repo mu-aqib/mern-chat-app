@@ -67,8 +67,9 @@ const getAllUsers = asyncHandler( async (req, res)=>{
         }
     :   {};
     // const users = await userModal.find(keyword).find({_id: {$ne: }});
+    const users = await userModal.find(keyword);
     
-    res.send("users")
+    res.send(users)
 } )
 
-module.exports = { userRegistration, userLogin, getAllUsers } 
+module.exports = { userRegistration, userLogin, getAllUsers }
