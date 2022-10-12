@@ -66,8 +66,8 @@ const getAllUsers = asyncHandler( async (req, res)=>{
             ]
         }
     :   {};
-    // const users = await userModal.find(keyword).find({_id: {$ne: }});
-    const users = await userModal.find(keyword);
+    const users = await userModal.find(keyword).find({_id: {$ne: req.user._id}});
+    // const users = await userModal.find(keyword);
     
     res.send(users)
 } )

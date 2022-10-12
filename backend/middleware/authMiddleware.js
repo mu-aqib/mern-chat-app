@@ -12,7 +12,7 @@ const isUser = asyncHandler( async (req, res, next)=>{
             token = req.headers.authorization.split(" ")[1];
             // decode token
             const decode = jwt.decode(token, process.env.JWT_SECRET)
-            const user = await userModal.findById(decode.id).select('-password')
+            req.user = await userModal.findById(decode.id).select('-password')
             next()
         }
         catch(err){
@@ -23,7 +23,7 @@ const isUser = asyncHandler( async (req, res, next)=>{
     
     if(!token){
         res.status(401);
-        throw new Error("Not Authorized, Token not valid")
+        throw new Error("Not Authorized, Token is null")
     }
 } )
 
