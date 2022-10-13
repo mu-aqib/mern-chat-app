@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const userModal = require('../modal/userModal');
 const asyncHandler = require('express-async-handler');
 
-const isUser = asyncHandler( async (req, res, next)=>{
+const isUserAuhtentic = asyncHandler( async (req, res, next)=>{
     let token = undefined;
     if(
         req.headers.authorization &&
@@ -23,8 +23,8 @@ const isUser = asyncHandler( async (req, res, next)=>{
     
     if(!token){
         res.status(401);
-        throw new Error("Not Authorized, Token is null")
+        throw new Error("User Not Authorized")
     }
 } )
 
-module.exports = {isUser} 
+module.exports = {isUserAuhtentic} 

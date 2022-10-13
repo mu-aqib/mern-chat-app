@@ -47,8 +47,7 @@ const userLogin = asyncHandler(async (req, res)=>{
             _id: user._id,
             email: user.email,
             name: user.name,
-            token: generateJWTToken(user._id),
-            message: "User Logged in"
+            token: generateJWTToken(user._id)
         })
     }
     else{
