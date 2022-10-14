@@ -4,8 +4,7 @@ const User = require("../modal/userModal");
 
 const createChat = expressAsyncHandler( async (req, res)=>{
     const { userId } = req.body;
-    console.log(userId)
-    
+
     if(!userId){
         return res.sendStatus(400);
     }
@@ -18,34 +17,36 @@ const createChat = expressAsyncHandler( async (req, res)=>{
         ],
     })
     .populate("users", "-password")
-    .populate("latestMessage");
+    // .populate("lastMessage");
+    res.status(200).send(isChat)
     
-    isChat = await User.populate(isChat, {
-        path: "latestMessage.sender",
-        select: "name pic email",
-    });
+    // isChat = await User.populate(isChat, {
+    //     path: "lastMessage.sender",
+    //     select: "name pic email",
+    // });
 
-    if (isChat.length > 0) {
-        res.send(isChat[0]);
-    } else {
-        var chatData = {
-            chatName: "sender",
-            isGroupChat: false,
-            users: [req.user._id, userId],
-        };
+    // if (isChat.length > 0) {
+    //     console.log("chat available")
+    //     res.send(isChat[0]);
+    // } else {
+    //     var chatData = {
+    //         chatName: "sender",
+    //         isGroupChat: false,
+    //         users: [req.user._id, userId],
+    //     };
 
-        try {
-            const createdChat = await Chat.create(chatData);
-            const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
-            "users",
-            "-password"
-            );
-            res.status(200).json(FullChat);
-        } catch (error) {
-            res.status(400);
-            throw new Error(error.message);
-        }
-    }
+    //     try {
+    //         const createdChat = await Chat.create(chatData);
+    //         const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
+    //         "users",
+    //         "-password"
+    //         );
+    //         res.status(200).json(FullChat);
+    //     } catch (error) {
+    //         res.status(400);
+    //         throw new Error(error.message);
+    //     }
+    // }
         
 } )
 
