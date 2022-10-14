@@ -80,6 +80,7 @@ const creatGroupChat = expressAsyncHandler(async (req,res)=>{
     }
     // if chat user less than 2 
     const users = JSON.parse(req.body.users)
+    console.log(users)
     if(users.length < 2){
         return res.status(400).send("Minimum 2 users required to create group chat")
     }
@@ -97,10 +98,12 @@ const creatGroupChat = expressAsyncHandler(async (req,res)=>{
         })
         .populate('users', '-password')
         .populate('GroupAdmin', '-password')
+
+        res.status(200).json(fullGroupChat);
     }
     catch(err){
         res.status(400)
-        throw new Error(err.message)
+        throw new Error(err.message + " chat group error ")
     }
 })
 
