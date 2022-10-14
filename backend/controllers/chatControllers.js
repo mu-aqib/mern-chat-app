@@ -18,7 +18,7 @@ const createChat = expressAsyncHandler( async (req, res)=>{
     })
     .populate("users", "-password")
     .populate("lastMessage");
-    
+    // select user of given latest message
     isChat = await User.populate(isChat, {
         path: "lastMessage.sender",
         select: "name pic email",
@@ -58,7 +58,7 @@ const fetchChats = expressAsyncHandler( async (req, res)=>{
         .populate('lastMessage')
         .sort({updatedAt: -1})
 
-        allChats = User.populate(allChats, {
+        allChats = await User.populate(allChats, {
             path: 'lastMessage.sender',
             select: 'name picture email'
         })
@@ -71,4 +71,37 @@ const fetchChats = expressAsyncHandler( async (req, res)=>{
     }
 } )
 
-module.exports = {createChat, fetchChats} 
+
+// create group chat
+const creatGroupChat = expressAsyncHandler(async (req,res)=>{
+    // if data empty then show res
+    if(!req.body.users && !req.body.chatName){
+        return res.status(400).send({msg: "Please fill all the fields"})
+    }
+    // if chat user less than 2 
+    const users = JSON.parse(req.body.users)
+    if(users.length < 2){
+        return res.status(400).send("Minimum 2 users required to create group chat")
+    }
+    users.push(req.user);
+    try{
+        const creatGroupChat = await Chat.create({
+            chatName : req.body.name,
+            users: users,
+            isGroupChat: true,
+            GroupAdmin: req.user
+        })
+
+        const fullGroupChat = await Chat.findOne({
+            _id: creatGroupChat._id
+        })
+        .populate('users', '-password')
+        .populate('GroupAdmin', '-password')
+    }
+    catch(err){
+        res.status(400)
+        throw new Error(err.message)
+    }
+})
+
+module.exports = {createChat, fetchChats, creatGroupChat} 
