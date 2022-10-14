@@ -1,12 +1,12 @@
 const express = require('express');
-const  { isUser }  = require('../middleware/authMiddleware');
+const  { isUserAuhtentic }  = require('../middleware/authMiddleware');
 
 const router = express.Router()
 
-// router.route('/').post(isUser, createChat);
-// router.route('/').get(isUser, fetchChat);
-// router.route('/group').post(isUser, creatGroupChat);
-// router.route('/rename').put(isUser, renameGroup);
-// router.route('/removeGroup').put(isUser, removeFromGroup);
+router.route('/').post(isUserAuhtentic, createChat);
+// router.route('/').get(isUserAuhtentic, fetchChat);
+// router.route('/group').post(isUserAuhtentic, creatGroupChat);
+// router.route('/rename').put(isUserAuhtentic, renameGroup);
+// router.route('/removeGroup').put(isUserAuhtentic, removeFromGroup);
 
 module.exports = router;

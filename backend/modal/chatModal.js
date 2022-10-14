@@ -33,8 +33,3 @@ const chatModal = mongoose.Schema({
 
 const Chat = mongoose.model("Chat", chatModal);
 module.exports = Chat;
-// chat name
-// chat users
-// latest message
-// is groupchat
-// group Admin
