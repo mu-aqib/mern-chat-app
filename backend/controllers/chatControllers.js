@@ -94,6 +94,8 @@ const creatGroupChat = expressAsyncHandler(async (req,res)=>{
         })
 
         const fullGroupChat = await Chat.findOne({
+
+            
             _id: creatGroupChat._id
         })
         .populate('users', '-password')
