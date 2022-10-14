@@ -1,5 +1,6 @@
 const express = require('express');
 const  { isUserAuhtentic }  = require('../middleware/authMiddleware');
+const { createChat }  = require('../controllers/chatControllers')
 
 const router = express.Router()
 
