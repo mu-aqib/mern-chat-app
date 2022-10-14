@@ -25,7 +25,6 @@ const createChat = expressAsyncHandler( async (req, res)=>{
     });
 
     if (isChat.length > 0) {
-        console.log("chat available")
         res.send(isChat[0]);
     } else {
         var chatData = {
@@ -49,4 +48,27 @@ const createChat = expressAsyncHandler( async (req, res)=>{
         
 } )
 
-module.exports = {createChat} 
+const fetchChats = expressAsyncHandler( async (req, res)=>{
+    try{
+        let allChats = await Chat.find({
+            users: {$elemMatch : {$eq: req.user._id}}
+        })
+        .populate('users', '-password')
+        .populate('GroupAdmin', '-password')
+        .populate('lastMessage')
+        .sort({updatedAt: -1})
+
+        allChats = User.populate(allChats, {
+            path: 'lastMessage.sender',
+            select: 'name picture email'
+        })
+
+        res.status(200).send(allChats)
+    }
+    catch(err){
+        res.status(400);
+        throw new Error(err.message)
+    }
+} )
+
+module.exports = {createChat, fetchChats} 
