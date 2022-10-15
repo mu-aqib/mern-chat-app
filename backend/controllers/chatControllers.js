@@ -127,16 +127,40 @@ const renameGroup = expressAsyncHandler(async (req, res)=>{
     )
     .populate("users", "-password")
     .populate("GroupAdmin", "-password");
-    
+
     if (!updateName) {
-        console.log("not updated")
         res.status(404);
         throw new Error("Chat Not Found");
     } else {
-        console.log("console")
         res.json(updateName);
     } 
 
 })
 
-module.exports = {createChat, fetchChats, creatGroupChat, renameGroup} 
+// remove user from group
+const removeUserFromGroup = expressAsyncHandler(async (req, res) => {
+    const { chatId, uid } = req.body;
+  
+    // check if the requester is admin
+  
+    const removed = await Chat.findByIdAndUpdate(
+      chatId,
+      {
+        $pull: { users: uid },
+      },
+      {
+        new: true,
+      }
+    )
+      .populate("users", "-password")
+      .populate("GroupAdmin", "-password");
+  
+    if (!removed) {
+      res.status(404);
+      throw new Error("Chat Not Found");
+    } else {
+      res.json(removed);
+    }
+  });
+
+module.exports = {createChat, fetchChats, creatGroupChat, renameGroup, removeUserFromGroup} 
