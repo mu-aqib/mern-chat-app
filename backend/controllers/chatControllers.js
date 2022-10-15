@@ -2,8 +2,10 @@ const expressAsyncHandler = require("express-async-handler");
 const Chat = require("../modal/chatModal");
 const User = require("../modal/userModal");
 
+// single chat creation
 const createChat = expressAsyncHandler( async (req, res)=>{
     const { userId } = req.body;
+    console.log(req.user._id, userId)
 
     if(!userId){
         return res.sendStatus(400);
@@ -18,6 +20,7 @@ const createChat = expressAsyncHandler( async (req, res)=>{
     })
     .populate("users", "-password")
     .populate("lastMessage");
+    
     // select user of given latest message
     isChat = await User.populate(isChat, {
         path: "lastMessage.sender",
@@ -25,6 +28,7 @@ const createChat = expressAsyncHandler( async (req, res)=>{
     });
 
     if (isChat.length > 0) {
+        console.log("chat laready available with given id " + userId)
         res.send(isChat[0]);
     } else {
         var chatData = {
@@ -39,6 +43,7 @@ const createChat = expressAsyncHandler( async (req, res)=>{
             "users",
             "-password"
             );
+            console.log("Chat created")
             res.status(200).json(FullChat);
         } catch (error) {
             res.status(400);
@@ -48,6 +53,7 @@ const createChat = expressAsyncHandler( async (req, res)=>{
         
 } )
 
+// fetch chats...
 const fetchChats = expressAsyncHandler( async (req, res)=>{
     try{
         let allChats = await Chat.find({
@@ -71,7 +77,6 @@ const fetchChats = expressAsyncHandler( async (req, res)=>{
     }
 } )
 
-
 // create group chat
 const creatGroupChat = expressAsyncHandler(async (req,res)=>{
     // if data empty then show res
@@ -94,8 +99,6 @@ const creatGroupChat = expressAsyncHandler(async (req,res)=>{
         })
 
         const fullGroupChat = await Chat.findOne({
-
-            
             _id: creatGroupChat._id
         })
         .populate('users', '-password')
@@ -109,4 +112,31 @@ const creatGroupChat = expressAsyncHandler(async (req,res)=>{
     }
 })
 
-module.exports = {createChat, fetchChats, creatGroupChat} 
+// rename group name
+const renameGroup = expressAsyncHandler(async (req, res)=>{
+    const {chatName, chatId} = req.body;
+
+    const updateName = await Chat.findByIdAndUpdate(
+        chatId,
+        {
+            chatName: chatName,
+        },
+        {
+            new: true,
+        }
+    )
+    .populate("users", "-password")
+    .populate("GroupAdmin", "-password");
+    
+    if (!updateName) {
+        console.log("not updated")
+        res.status(404);
+        throw new Error("Chat Not Found");
+    } else {
+        console.log("console")
+        res.json(updateName);
+    } 
+
+})
+
+module.exports = {createChat, fetchChats, creatGroupChat, renameGroup} 
