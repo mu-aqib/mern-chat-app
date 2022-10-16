@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import chatContext from './Context/ChatContext'
+import ChatContext from './Context/ChatContext'
 
 ReactDOM.render(
-  <chatContext>
+  <ChatContext>
     <App />
-  </chatContext>,
+  </ChatContext>,
   document.getElementById('root')
 );
 
