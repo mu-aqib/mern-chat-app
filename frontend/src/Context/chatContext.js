@@ -1,12 +1,16 @@
-import React, { useState, createContext, useContext} from 'react'
+import React, {useState, createContext, useContext} from 'react'
 
 const chat = createContext();
 
-const chatContext = ({children}) => {
-    // const [user, setUser] = useState()
+const ChatContext = ({children}) => {
+    const [user, setUser] = useState()
     return  (
-        <chat.Provider > {children} </chat.Provider>
+        <chat.Provider value={{user, setUser}}> {children} </chat.Provider>
     )
 }
 
-export default chatContext
+export const ChatState = ()=> {
+    return useContext(chat)
+}
+
+export default ChatContext
