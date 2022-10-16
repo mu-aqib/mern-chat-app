@@ -141,8 +141,6 @@ const renameGroup = expressAsyncHandler(async (req, res)=>{
 const removeUserFromGroup = expressAsyncHandler(async (req, res) => {
     const { chatId, uid } = req.body;
   
-    // check if the requester is admin
-  
     const removed = await Chat.findByIdAndUpdate(
       chatId,
       {
@@ -165,8 +163,6 @@ const removeUserFromGroup = expressAsyncHandler(async (req, res) => {
 
 const addUserToGroup = expressAsyncHandler(async (req, res) => {
     const { chatId, uid } = req.body;
-  
-    // check if the requester is admin
   
     const removed = await Chat.findByIdAndUpdate(
       chatId,

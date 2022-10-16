@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import chatContext from './Context/chatContext'
 
 ReactDOM.render(
-  <React.StrictMode>
+  <chatContext>
     <App />
-  </React.StrictMode>,
+  </chatContext>,
   document.getElementById('root')
 );
 
