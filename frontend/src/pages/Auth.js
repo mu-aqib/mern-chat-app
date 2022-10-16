@@ -1,22 +1,46 @@
-import React, { Component } from 'react'
-import './auth.css'
+import React, { Component, useEffect, useState } from 'react'
+import '../components/Authentication/auth.css'
 import Login from '../components/Authentication/Login';
 import Register from '../components/Authentication/Register';
+import { useNavigate } from 'react-router-dom';
 
-export default class login extends Component {
-    state = {
-        selected: 'login',
-    };
+function Auth() {
+    const navigate = useNavigate()
+    const [state, setState] = useState('login');
+    const [user, setUser] = useState();
 
-    handleChange(index) {
-        this.setState({ selected: index });
-        console.log(this.state.selected)
-    }
+    useEffect(()=>{
+        const user_info = JSON.parse(localStorage.getItem('userInfo'))
+
+        setUser(user_info)
+
+        if(!user_info){
+            navigate('/')
+        }
+    },[navigate])
+
+    return (
+        <div className="form-container">
+            <div className='btn-box'>
+                <button className={`login ${this.state.selected == 'login' ? 'active' : ''}`} onClick={()=> setState('login')}>
+                    <span>sign in</span>
+                </button>
+                <button className={`register ${this.state.selected == 'register' ? 'active' : ''}`} onClick={()=> setState('register')}>
+                    <span>register</span>
+                </button>
+            </div>
+            {/* consitional rendering of forms */}
+            <div className='auth' >
+                { this.state.selected == 'login' ? ( <Login /> )  :  ( <Register /> )}
+            </div>
+            
+        </div>
+    )
+}
+
+export default Auth
 
 
-    render() {
-        return (
-            <>
                 {/* <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="800px" height="600px" viewBox="0 0 800 600" enable-background="new 0 0 800 600" xml:space="preserve">
                     <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="174.7899" y1="186.34" x2="330.1259" y2="186.34" gradientTransform="matrix(0.8538 0.5206 -0.5206 0.8538 147.9521 -79.1468)">
                         <stop offset="0" style="stop-color:#FFC035" />
@@ -46,24 +70,3 @@ export default class login extends Component {
                     </linearGradient>
                     <circle fill="url(#SVGID_5_)" cx="435.095" cy="184.986" r="63.504" />
                 </svg> */}
-
-                
-                <div className="form-container">
-                    <div className='btn-box'>
-                        <button className={`login ${this.state.selected == 'login' ? 'active' : ''}`} onClick={()=> this.handleChange('login')}>
-                            <span>sign in</span>
-                        </button>
-                        <button className={`register ${this.state.selected == 'register' ? 'active' : ''}`} onClick={()=> this.handleChange('register')}>
-                            <span>register</span>
-                        </button>
-                    </div>
-                    {/* consitional rendering of forms */}
-                    <div className='auth' >
-                        { this.state.selected == 'login' ? ( <Login /> )  :  ( <Register /> )}
-                    </div>
-                    
-                </div>
-            </>
-        )
-    }
-}
