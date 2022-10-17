@@ -1,29 +1,27 @@
 import React from "react";
-import "./Modal.css";
+import "./model.css";
 
-function Modal({ setOpenModal }) {
+function Modal({ toggleModel }) {
   return (
     <div className="modalBackground">
       <div className="modalContainer">
-        <div className="titleCloseBtn">
-          <button
-            onClick={() => {
-              setOpenModal(false);
-            }}
-          >
-            X
-          </button>
-        </div>
+
+          <button onClick={() => {
+                toggleModel(false);
+            }} class="close">✖</button>
+
         <div className="title">
           <h1>Are You Sure You Want to Continue?</h1>
         </div>
+
         <div className="body">
           <p>The next page looks amazing. Hope you want to go there!</p>
         </div>
+
         <div className="footer">
           <button
             onClick={() => {
-              setOpenModal(false);
+                toggleModel(false);
             }}
             id="cancelBtn"
           >
@@ -31,6 +29,7 @@ function Modal({ setOpenModal }) {
           </button>
           <button>Continue</button>
         </div>
+        
       </div>
     </div>
   );

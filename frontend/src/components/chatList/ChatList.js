@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./chatList.css";
 import ChatListItems from "./ChatListItems";
+import Modal from "../model/Model";
 
 export default class ChatList extends Component {
   allChatUsers = [
@@ -84,19 +85,32 @@ export default class ChatList extends Component {
       isOnline: true,
     },
   ];
+
+  
+
   constructor(props) {
     super(props);
     this.state = {
       allChats: this.allChatUsers,
+      modalOpen: false
     };
   }
+
+  toggleModel(arg) {
+    this.setState({
+      modalOpen: arg
+    })
+  }
+
   render() {
     return (
       <div className="main__chatlist">
-        <button className="btn">
+        {/* add new conversation */}
+        <button className="btn" onClick={()=> this.toggleModel(true)}>
           <i className="fa fa-plus"></i>
           <span>New conversation</span>
         </button>
+
         <div className="chatlist__heading">
           <h2>Chats</h2>
           <button className="btn-nobg">
@@ -125,6 +139,8 @@ export default class ChatList extends Component {
             );
           })}
         </div>
+
+        { this.state.modalOpen && <Modal /> }
       </div>
     );
   }
