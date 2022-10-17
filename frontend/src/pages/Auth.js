@@ -20,6 +20,7 @@ function Auth() {
         }
     },[navigate])
 
+
     return (
         <div className="form-container">
             <div className='btn-box'>

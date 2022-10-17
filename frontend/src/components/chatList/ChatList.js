@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { useState } from 'react'
 import "./chatList.css";
 import ChatListItems from "./ChatListItems";
 import Modal from "../model/Model";
 
-export default class ChatList extends Component {
-  allChatUsers = [
+function ChatList() {
+  const allChatUsers = [
     {
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
@@ -86,62 +86,49 @@ export default class ChatList extends Component {
     },
   ];
 
-  
+  const [allChats, setAllchats] = useState(allChatUsers)
+  const [toggleModel, setToggleModel] = useState(false)
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      allChats: this.allChatUsers,
-      modalOpen: false
-    };
-  }
+  return (
+    <div className="main__chatlist">
+      {/* add new conversation */}
+      <button className="btn" onClick={()=> setToggleModel(true)}>
+        <i className="fa fa-plus"></i>
+        <span>New conversation</span>
+      </button>
 
-  toggleModel(arg) {
-    this.setState({
-      modalOpen: arg
-    })
-  }
-
-  render() {
-    return (
-      <div className="main__chatlist">
-        {/* add new conversation */}
-        <button className="btn" onClick={()=> this.toggleModel(true)}>
-          <i className="fa fa-plus"></i>
-          <span>New conversation</span>
+      <div className="chatlist__heading">
+        <h2>Chats</h2>
+        <button className="btn-nobg">
+          <i className="fa fa-ellipsis-h"></i>
         </button>
-
-        <div className="chatlist__heading">
-          <h2>Chats</h2>
-          <button className="btn-nobg">
-            <i className="fa fa-ellipsis-h"></i>
+      </div>
+      {/* <div className="chatList__search">
+        <div className="search_wrap">
+          <input type="text" placeholder="Search Here" required />
+          <button className="search-btn">
+            <i className="fa fa-search"></i>
           </button>
         </div>
-        {/* <div className="chatList__search">
-          <div className="search_wrap">
-            <input type="text" placeholder="Search Here" required />
-            <button className="search-btn">
-              <i className="fa fa-search"></i>
-            </button>
-          </div>
-        </div> */}
-        <div className="chatlist__items">
-          {this.state.allChats.map((item, index) => {
-            return (
-              <ChatListItems
-                name={item.name}
-                key={item.id}
-                animationDelay={index + 1}
-                active={item.active ? "active" : ""}
-                isOnline={item.isOnline ? "active" : ""}
-                image={item.image}
-              />
-            );
-          })}
-        </div>
-
-        { this.state.modalOpen && <Modal /> }
+      </div> */}
+      <div className="chatlist__items">
+        {allChats.map((item, index) => {
+          return (
+            <ChatListItems
+              name={item.name}
+              key={item.id}
+              animationDelay={index + 1}
+              active={item.active ? "active" : ""}
+              isOnline={item.isOnline ? "active" : ""}
+              image={item.image}
+            />
+          );
+        })}
       </div>
-    );
-  }
+
+      { toggleModel && <Modal toggleModel={setToggleModel}/> }
+    </div>
+  );
 }
+
+export default ChatList
