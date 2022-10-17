@@ -117,14 +117,14 @@ export default class ChatList extends Component {
             <i className="fa fa-ellipsis-h"></i>
           </button>
         </div>
-        <div className="chatList__search">
+        {/* <div className="chatList__search">
           <div className="search_wrap">
             <input type="text" placeholder="Search Here" required />
             <button className="search-btn">
               <i className="fa fa-search"></i>
             </button>
           </div>
-        </div>
+        </div> */}
         <div className="chatlist__items">
           {this.state.allChats.map((item, index) => {
             return (
