@@ -1,5 +1,6 @@
 import React from "react";
 import "./model.css";
+import Avatar from "../chatList/Avatar";
 
 function Modal({ toggleModel }) {
   return (
@@ -20,16 +21,23 @@ function Modal({ toggleModel }) {
             </div>
         </div>
 
-        <div className="card-body">
-          <p>The next page looks amazing. Hope you want to go there!</p>
-        </div>
+        <div>
+            <div className={`chatlist__item add-user`} >
+                <Avatar image="https://res.cloudinary.com/cloudymedia313/image/upload/v1665229013/vvfshghefbwmojavjqdy.jpg" />
 
-        <div className="card-footer">
-            {/* <button onClick={() => { toggleModel(false); }} id="cancelBtn" >
-                Cancel
-            </button>
-            
-            <button>Continue</button> */}
+                <div className="userMeta">
+                    <h5 className="user-title">Muhammad Aqib</h5>
+                    <p className=""> <strong>Email</strong> aqibafridi0345@gmail.com </p>
+                </div>
+            </div>
+            <div className={`chatlist__item add-user`} >
+                <Avatar image="https://res.cloudinary.com/cloudymedia313/image/upload/v1665229013/vvfshghefbwmojavjqdy.jpg" />
+
+                <div className="userMeta">
+                    <h5 className="user-title">Muhammad Aqib</h5>
+                    <p className=""> <strong>Email</strong> aqibafridi0345@gmail.com </p>
+                </div>
+            </div>
         </div>
 
       </div>

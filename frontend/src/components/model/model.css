@@ -13,7 +13,7 @@
     position: relative;
     margin: auto;
     max-width: 500px;
-    min-width: 200px;
+    min-width: 380px;
     max-height: 500px;
     overflow-y: auto;
     border-radius: 5px;
@@ -36,23 +36,19 @@
     color: #c0c5cb;
     cursor: pointer;
   }
-  
-  .modalContainer .body {
+
+  .card-header .search_wrap{
+    margin-bottom: 15px;
   }
 
-  
-  .modalContainer .footer button {
-    width: 150px;
-    height: 45px;
-    margin: 10px;
-    border: none;
-    background-color: cornflowerblue;
-    color: white;
-    border-radius: 8px;
-    font-size: 20px;
-    cursor: pointer;
+  /* addd user styling */
+  .add-user{
+    padding: 10px 0px;
+    margin-top: 10px;
+    --dark-grey: #5d5d5d;
+    color: var(--dark-grey)
   }
-  
-  #cancelBtn {
-    background-color: crimson;
+  .add-user .userMeta p{
+    font-size: 0.75rem;
+    color: var(--dark-grey);
   }

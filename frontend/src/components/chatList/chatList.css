@@ -46,6 +46,7 @@
 
 .chatlist__item {
   display: flex;
+  align-items: center;
   border-bottom: 1px solid #ebe7fb;
   padding-bottom: 10px;
   margin-top: 10px;
