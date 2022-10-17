@@ -90,3 +90,7 @@
 .profile__card.open .card__header i:before {
   content: "\f106";
 }
+.btn-logout{
+  width: 100%;
+  margin-bottom: 20px;
+}

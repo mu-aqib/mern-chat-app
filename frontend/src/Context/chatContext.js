@@ -8,6 +8,7 @@ const ChatContext = ({children}) => {
 
     const navigate = useNavigate();
 
+    // for validation if user is loggesin or not
     useEffect( ()=>{
         const user_info =  JSON.parse(localStorage.getItem('userInfo'))
 

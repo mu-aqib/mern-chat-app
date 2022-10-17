@@ -5,9 +5,19 @@ export default class UserProfile extends Component {
   toggleInfo = (e) => {
     e.target.parentNode.classList.toggle("open");
   };
+
+  logginOut = (e)=>{
+    console.log("logout")
+  };
+
+
   render() {
     return (
       <div className="main__userprofile">
+        <button className="btn btn-logout" onClick={this.logginOut}>
+          <i className="fa fa-sign-out"></i>
+          <span>Logout</span>
+        </button>
         <div className="profile__card user__profile__image">
           <div className="profile__image">
             <img src="https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg" />
