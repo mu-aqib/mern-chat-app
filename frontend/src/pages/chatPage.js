@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import "../components/chatBody/chatBody.css";
 import ChatList from "../components/chatList/ChatList";
 import ChatContent from "../components/chatContent/ChatContent";
 import UserProfile from "../components/userProfile/UserProfile";

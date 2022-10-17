@@ -8,8 +8,8 @@ const ChatContext = ({children}) => {
 
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        const user_info = JSON.parse(localStorage.getItem('userInfo'))
+    useEffect( ()=>{
+        const user_info =  JSON.parse(localStorage.getItem('userInfo'))
 
         setUser(user_info)
 

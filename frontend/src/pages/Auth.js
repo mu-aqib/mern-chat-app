@@ -1,37 +1,38 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../components/Authentication/auth.css'
 import Login from '../components/Authentication/Login';
 import Register from '../components/Authentication/Register';
 import { useNavigate } from 'react-router-dom';
 
 function Auth() {
-    const navigate = useNavigate()
-    const [state, setState] = useState('login');
-    const [user, setUser] = useState();
+    const [toggleState, setState] = useState('login');
+    const [user, setUserState] = useState();
+
+    const navigate = useNavigate();
 
     useEffect(()=>{
         const user_info = JSON.parse(localStorage.getItem('userInfo'))
 
-        setUser(user_info)
+        setUserState(user_info)
 
-        if(!user_info){
-            navigate('/')
+        if(user_info){
+            navigate('/chat')
         }
     },[navigate])
 
     return (
         <div className="form-container">
             <div className='btn-box'>
-                <button className={`login ${this.state.selected == 'login' ? 'active' : ''}`} onClick={()=> setState('login')}>
+                <button className={`login ${toggleState == 'login' ? 'active' : ''}`} onClick={()=> setState('login')}>
                     <span>sign in</span>
                 </button>
-                <button className={`register ${this.state.selected == 'register' ? 'active' : ''}`} onClick={()=> setState('register')}>
+                <button className={`register ${toggleState == 'register' ? 'active' : ''}`} onClick={()=> setState('register')}>
                     <span>register</span>
                 </button>
             </div>
             {/* consitional rendering of forms */}
             <div className='auth' >
-                { this.state.selected == 'login' ? ( <Login /> )  :  ( <Register /> )}
+                { toggleState == 'login' ? ( <Login /> )  :  ( <Register /> )}
             </div>
             
         </div>
