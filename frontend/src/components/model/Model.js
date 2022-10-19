@@ -5,7 +5,7 @@ import axios from "axios";
 import { ChatState } from '../../Context/ChatContext'
 
 function Modal({toggleModel}) {
-    const {user} = ChatState();
+    const {user, selectedChat} = ChatState();
     let [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([])
 
@@ -48,7 +48,7 @@ function Modal({toggleModel}) {
                 {
                     (searchResult.length>0) && 
                     searchResult.map( (user)=>( 
-                        <div className={`chatlist__item add-user`} key={user._id}>
+                        <div className={`chatlist__item add-user`} key={user._id} >
                             <Avatar image={ user.picture } />
 
                             <div className="userMeta">
