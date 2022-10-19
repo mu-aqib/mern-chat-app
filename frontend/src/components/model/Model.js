@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./model.css";
 import Avatar from "../chatList/Avatar";
 import axios from "axios";
@@ -8,7 +8,9 @@ function Modal({toggleModel}) {
     const {user, setSelectedChat} = ChatState();
     let [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([])
-
+    useEffect(()=>{
+        console.log(user)
+    }, [])
 
     async function fetchResults(){
         if(!search)
@@ -19,6 +21,7 @@ function Modal({toggleModel}) {
                     Authorization: `Bearer ${user.token}`,
                 }
             }
+
             const {data} = await axios.get(`api/user?filter=${search}`, config)
 
             setSearchResult(data)
