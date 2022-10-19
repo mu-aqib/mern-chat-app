@@ -57,7 +57,7 @@ const userLogin = asyncHandler(async (req, res)=>{
 })
 
 const getAllUsers = asyncHandler( async (req, res)=>{
-    const keyword = req.query.filter 
+    const keyword = req.query.filter
     ?   {
             $or : [
                 { name: { $regex: req.query.filter, $options: 'i' } },
@@ -65,8 +65,8 @@ const getAllUsers = asyncHandler( async (req, res)=>{
             ]
         }
     :   {};
+    // console.log(keyword, " keyword")
     const users = await userModal.find(keyword).find({_id: {$ne: req.user._id}});
-    // const users = await userModal.find(keyword);
     
     res.send(users)
 } )
