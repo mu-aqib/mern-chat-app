@@ -5,7 +5,6 @@ const User = require("../modal/userModal");
 // single chat creation
 const createChat = expressAsyncHandler( async (req, res)=>{
     const { userId } = req.body;
-    console.log(req.user._id, userId)
 
     if(!userId){
         return res.sendStatus(400);
@@ -31,6 +30,7 @@ const createChat = expressAsyncHandler( async (req, res)=>{
         console.log("chat laready available with given id " + userId)
         res.send(isChat[0]);
     } else {
+        console.log("chat created !")
         var chatData = {
             chatName: "sender",
             isGroupChat: false,

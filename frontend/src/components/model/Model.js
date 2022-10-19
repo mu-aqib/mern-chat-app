@@ -5,7 +5,7 @@ import axios from "axios";
 import { ChatState } from '../../Context/ChatContext'
 
 function Modal({toggleModel}) {
-    const {user, selectedChat} = ChatState();
+    const {user, setSelectedChat} = ChatState();
     let [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([])
 
@@ -21,6 +21,27 @@ function Modal({toggleModel}) {
             }
             const {data} = await axios.get(`api/user?filter=${search}`, config)
             setSearchResult(data)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+
+    const accesChat = async (userId)=>{
+        // access chat
+        // const {data} = axios.post(`api/`)
+        try{
+            const config = {
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${user.token}`,
+                }
+            }
+
+            const {data} = await axios.post('api/chat', {userId}, config);
+
+            setSelectedChat(data);
+            console.log(data)
         }
         catch(err){
             console.log(err)
@@ -48,7 +69,7 @@ function Modal({toggleModel}) {
                 {
                     (searchResult.length>0) && 
                     searchResult.map( (user)=>( 
-                        <div className={`chatlist__item add-user`} key={user._id} >
+                        <div className={`chatlist__item add-user`} key={user._id} onClick={()=>accesChat(user._id)} >
                             <Avatar image={ user.picture } />
 
                             <div className="userMeta">
