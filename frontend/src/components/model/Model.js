@@ -28,17 +28,15 @@ function Modal({toggleModel}) {
     }
 
     const accesChat = async (userId)=>{
-        // access chat
-        // const {data} = axios.post(`api/`)
+        console.log(userId)
         try{
             const config = {
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${user.token}`,
                 }
             }
 
-            const {data} = await axios.post('api/chat', {userId}, config);
+            const {data} = await axios.post('api/chat', {userId: "634160e66bab85575e358f82"}, config);
 
             setSelectedChat(data);
             console.log(data)

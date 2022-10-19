@@ -5,6 +5,7 @@ const User = require("../modal/userModal");
 // single chat creation
 const createChat = expressAsyncHandler( async (req, res)=>{
     const { userId } = req.body;
+    console.log(req.body, userId);
 
     if(!userId){
         return res.sendStatus(400);
