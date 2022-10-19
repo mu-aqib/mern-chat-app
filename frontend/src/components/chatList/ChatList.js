@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import "./chatList.css";
 import ChatListItems from "./ChatListItems";
 import Modal from "../model/Model";
+import { ChatState } from '../../Context/ChatContext';
 
 function ChatList() {
   const allChatUsers = [
@@ -88,6 +89,8 @@ function ChatList() {
 
   const [allChats, setAllchats] = useState(allChatUsers)
   const [toggleModel, setToggleModel] = useState(false)
+  // extracting states from context api
+  const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState()
 
   return (
     <div className="main__chatlist">

@@ -20,7 +20,9 @@ function Modal({toggleModel}) {
                 }
             }
             const {data} = await axios.get(`api/user?filter=${search}`, config)
+
             setSearchResult(data)
+            
         }
         catch(err){
             console.log(err)
@@ -39,7 +41,6 @@ function Modal({toggleModel}) {
             const {data} = await axios.post('api/chat', {userId: "634160e66bab85575e358f82"}, config);
 
             setSelectedChat(data);
-            console.log(data)
         }
         catch(err){
             console.log(err)
