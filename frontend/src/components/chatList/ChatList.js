@@ -95,7 +95,7 @@ function ChatList() {
   // extracting states from context api
   
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
-  
+
   const fetchChats = async () => {
     try {
 
@@ -107,7 +107,7 @@ function ChatList() {
 
       const { data } = await axios.get("/api/chat", config);
       setChats(data);
-      console.log(chats)
+      if(chats.length> 0) console.log(chats);
       
     } catch (error) {
       console.log(error)
@@ -135,19 +135,32 @@ function ChatList() {
         <button className="btn-nobg">
           <i className="fa fa-ellipsis-h"></i>
         </button>
+     
       </div>
 
       <div className="chatlist__items">
-        {allChats && allChats.map((item, index) => {
+
+        {chats.length > 0 && chats.map((item, index) => {
           return (
+            // <ChatListItems
+            //   name={item.name}
+            //   key={item.id}
+            //   animationDelay={index + 1}
+            //   active={item.active ? "active" : ""}
+            //   isOnline={item.isOnline ? "active" : ""}
+            //   image={item.image}
+            // />
+
+
             <ChatListItems
-              name={item.name}
-              key={item.id}
+              name={item.chatName}
+              key={item._id}
               animationDelay={index + 1}
-              active={item.active ? "active" : ""}
-              isOnline={item.isOnline ? "active" : ""}
-              image={item.image}
+              active={"active"}
+              isOnline={"active"}
+              image={item.users[1].picture}
             />
+            
           );
         })}
       </div>
