@@ -95,6 +95,7 @@ function ChatList() {
   // extracting states from context api
   
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  
   const fetchChats = async () => {
     try {
 
@@ -105,33 +106,18 @@ function ChatList() {
       };
 
       const { data } = await axios.get("/api/chat", config);
-
       setChats(data);
-      console.log(data)
+      console.log(chats)
       
     } catch (error) {
       console.log(error)
     }
     
   };
-  const getPosts = async () => { try {
-
-    const {data} = await axios.get("https://jsonplaceholder.typicode.com/posts")
-    
-    console.log(data);
-    } 
-    catch (err) { console.error(err.message); } 
-  };
 
   useEffect(()=>{
     if(user) {
       fetchChats(); 
-      // const config = {
-      //   headers: {
-      //     Authorization: `Bearer ${user.token}`,
-      //   },
-      // };
-      // console.log(config);
     }
   }, [user])
 
