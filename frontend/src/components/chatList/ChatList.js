@@ -4,6 +4,7 @@ import ChatListItems from "./ChatListItems";
 import Modal from "../model/Model";
 import { ChatState } from '../../Context/ChatContext';
 import axios from 'axios';
+import { getUserName } from '../../config/chatLogics'
 
 function ChatList() {
   const allChatUsers = [
@@ -89,7 +90,7 @@ function ChatList() {
   ];
   // states
   const [loggedUser, setLoggedUser] = useState(null);
-  const [allChats, setAllchats] = useState(allChatUsers)
+  // const [allChats, setAllchats] = useState(allChatUsers)
   const [toggleModel, setToggleModel] = useState(false)
 
   // extracting states from context api
@@ -107,9 +108,9 @@ function ChatList() {
 
       const { data } = await axios.get("/api/chat", config);
       setChats(data);
-      if(chats.length> 0) console.log(chats);
       
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error)
     }
     
@@ -118,6 +119,7 @@ function ChatList() {
   useEffect(()=>{
     if(user) {
       fetchChats(); 
+      setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     }
   }, [user])
 
@@ -151,9 +153,8 @@ function ChatList() {
             //   image={item.image}
             // />
 
-
             <ChatListItems
-              name={item.chatName}
+              name={item.isGroupChat ? item.chatName : getUserName(loggedUser, item.users) }
               key={item._id}
               animationDelay={index + 1}
               active={"active"}
