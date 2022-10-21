@@ -140,7 +140,7 @@ function ChatList() {
           <i className="fa fa-ellipsis-h"></i>
         </button>
      
-      </div>
+      </div> 
 
       <div className="chatlist__items">
 
