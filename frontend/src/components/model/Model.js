@@ -5,7 +5,7 @@ import axios from "axios";
 import { ChatState } from '../../Context/ChatContext'
 
 function Modal({toggleModel}) {
-    const {user, setSelectedChat} = ChatState();
+    const {user, setSelectedChat, chats, setChats} = ChatState();
     let [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([])
     useEffect(()=>{
@@ -42,8 +42,13 @@ function Modal({toggleModel}) {
             }
 
             const {data} = await axios.post('api/chat', {userId: "634160e66bab85575e358f82"}, config);
-
-            setSelectedChat(data);
+            const isChatAvailable = chats.find((chat)=> chat._id === data._id);
+            if(isChatAvailable) {console.log("chat alreadt availabe")
+            setSelectedChat(data);}
+            else{
+                setChats([data, ...chats])
+                console.log("new chat added")
+            }
         }
         catch(err){
             console.log(err)
