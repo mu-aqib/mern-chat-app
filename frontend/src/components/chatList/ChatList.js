@@ -158,7 +158,7 @@ function ChatList() {
               activeChat={selectedChat === item ? "active" : ''}
               isOnline={"active"}
               image={item.users[1].picture}
-            />
+            />   
             
           );
         })}
