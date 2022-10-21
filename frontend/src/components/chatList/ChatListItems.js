@@ -1,25 +1,18 @@
 import React, { Component } from "react";
 import Avatar from "./Avatar";
 
+
 export default class ChatListItems extends Component {
   constructor(props) {
     super(props);
+    console.log(props.activeChat)
   }
-  // selectChat = (e) => {
-  //   for (
-  //     let index = 0;
-  //     index < e.currentTarget.parentNode.children.length;
-  //     index++
-  //   ) {
-  //     e.currentTarget.parentNode.children[index].classList.remove("active");
-  //   }
-  //   e.currentTarget.classList.add("active");
-  // };
+
 
   render() {
     return (
       <div
-        onClick={() => {this.props.customEvent(this.props.chatID)}}
+        onClick={() => {this.props.customEvent(this.props.chat)}}
         style={{ animationDelay: `0.${this.props.animationDelay}s` }}
         className={`chatlist__item ${ this.props.activeChat } `}
       >
