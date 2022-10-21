@@ -19,7 +19,7 @@ export default class ChatListItems extends Component {
   render() {
     return (
       <div
-        onClick={() => {this.props.customEvent(this.props.chatID); console.log(this.props.chatItem)}}
+        onClick={() => {this.props.customEvent(this.props.chatID)}}
         style={{ animationDelay: `0.${this.props.animationDelay}s` }}
         className={`chatlist__item ${ this.props.activeChat } `}
       >

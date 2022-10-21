@@ -89,19 +89,19 @@ function ChatList() {
   //   },
   // ];
   // states
-  const [loggedUser, setLoggedUser] = useState(null);
   // const [allChats, setAllchats] = useState(allChatUsers)
+  const [loggedUser, setLoggedUser] = useState(null);
   const [toggleModel, setToggleModel] = useState(false)
 
   // extracting states from context api
-  
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
 
   function setActiveChat(chat){
-    console.log(chat);
     setSelectedChat(chat);
   }
-
+  function renderActiveChat(item){
+    return selectedChat === item ? "active" : ''
+  }
   const fetchChats = async () => {
     try {
 
@@ -120,15 +120,12 @@ function ChatList() {
     }
     
   };
-
   useEffect(()=>{
     if(user) {
       fetchChats(); 
       setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     }
-  }, [user])
-
-
+  }, [user, selectedChat])
   return (
     <div className="main__chatlist">
       {/* add new conversation */}
@@ -155,7 +152,7 @@ function ChatList() {
               name={item.isGroupChat ? item.chatName : getUserName(loggedUser, item.users) }
               key={item._id}
               animationDelay={index + 1}
-              activeChat={selectedChat === item ? "active" : ''}
+              activeChat={ ()=> renderActiveChat(item) }
               isOnline={"active"}
               image={item.users[1].picture}
             />   

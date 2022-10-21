@@ -8,9 +8,6 @@ function Modal({toggleModel}) {
     const {user, setSelectedChat, chats, setChats} = ChatState();
     let [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([])
-    useEffect(()=>{
-        console.log(user)
-    }, [])
 
     async function fetchResults(){
         if(!search)
@@ -33,7 +30,6 @@ function Modal({toggleModel}) {
     }
 
     const accesChat = async (userId)=>{
-        console.log(userId)
         try{
             const config = {
                 headers: {
@@ -41,14 +37,13 @@ function Modal({toggleModel}) {
                 }
             }
 
-            const {data} = await axios.post('api/chat', {userId: "634160e66bab85575e358f82"}, config);
+            const {data} = await axios.post('api/chat', {userId: userId}, config);
             const isChatAvailable = chats.find((chat)=> chat._id === data._id);
-            if(isChatAvailable) {console.log("chat alreadt availabe")
-            setSelectedChat(data);}
-            else{
+            if(!isChatAvailable) {
                 setChats([data, ...chats])
-                console.log("new chat added")
             }
+            setSelectedChat(data);
+            toggleModel(false)
         }
         catch(err){
             console.log(err)
