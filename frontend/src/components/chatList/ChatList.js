@@ -99,7 +99,6 @@ function ChatList() {
 
   function setActiveChat(chat){
     console.log(chat);
-    alert();
     setSelectedChat(chat);
   }
 
@@ -152,6 +151,7 @@ function ChatList() {
           return (
             <ChatListItems
               customEvent = {setActiveChat}
+              chatID = {item}
               name={item.isGroupChat ? item.chatName : getUserName(loggedUser, item.users) }
               key={item._id}
               animationDelay={index + 1}
