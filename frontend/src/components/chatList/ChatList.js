@@ -112,7 +112,7 @@ function ChatList() {
 
       const { data } = await axios.get("/api/chat", config);
       setChats(data);
-      
+      setSelectedChat(data[0])
     } 
     catch (error) {
       console.log(error)
@@ -129,6 +129,8 @@ function ChatList() {
 
   useEffect( ()=> {
       // const isChatAvailable = selectedChat
+      // const isChatAvailable = selectedChat;
+      // console.log(isChatAvailable);
       const isChatAvailable = chats.find((chat)=> chat._id === selectedChat._id);
       setactiveUserChat(isChatAvailable);
   }, [selectedChat] )
@@ -162,8 +164,7 @@ function ChatList() {
               activeChat={item === activeUserChat ? "active" : ""}
               isOnline={"active"}
               image={item.users[1].picture}
-            />   
-            
+            />
           );
         })}
       </div>
