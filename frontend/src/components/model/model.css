@@ -52,3 +52,22 @@
     font-size: 0.75rem;
     color: var(--dark-grey);
   }
+ 
+  /* header modal chat buttons */
+  .btn-model-chat{
+    width: 50%;
+    height: auto;
+    justify-content: center;
+    padding: 0px 20px;
+    line-height: 3;
+  }
+  .bg-outline-secondary{
+    border: 1px solid #5ff18363 ;
+    color: rgb(6, 6, 6);
+    background: #5ff18363;
+  }
+  .bg-outline-secondary:hover{
+    background: #5ff183;
+    color: #000;
+    border-color: #5ff183;
+  }

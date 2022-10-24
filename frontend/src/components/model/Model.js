@@ -58,6 +58,9 @@ function Modal({toggleModel}) {
 
                 <div className="card-header">
                     {/* header content  */}
+                    <div>
+                        <button className="btn btn-model-chat bg-outline-secondary"> group chat </button>
+                    </div>
                     <div className="chatList__search">
                         <div className="search_wrap">
                             <input type="text" placeholder="Search Here" onChange={(e)=> { setSearch(e.target.value) } }/>
