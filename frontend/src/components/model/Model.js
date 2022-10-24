@@ -58,16 +58,21 @@ function Modal({toggleModel}) {
 
                 <div className="card-header">
                     {/* header content  */}
-                    <div>
-                        <button className="btn btn-model-chat bg-outline-secondary"> group chat </button>
+                    <div className="flex mb-3">
+                        <button className="btn btn-model-chat"> single chat </button>
+                        <button className={'btn btn-model-chat active-tab'}> group chat </button>
                     </div>
-                    <div className="chatList__search">
+                    <div className="chatList__search group-conversation">
                         <div className="search_wrap">
-                            <input type="text" placeholder="Search Here" onChange={(e)=> { setSearch(e.target.value) } }/>
+                            <input type="text" placeholder="Group Name" />
+                        </div>
+                        <div className="search_wrap">
+                            <input type="text" placeholder="Add user" onChange={(e)=> { setSearch(e.target.value) } }/>
                             <button className="search-btn" onClick={fetchResults}>
                                 <i className="fa fa-search"></i>
                             </button>
                         </div>
+
                     </div>
                 </div>
                 {/* searched user list */}

@@ -12,7 +12,7 @@
   .modalContainer {
     position: relative;
     margin: auto;
-    max-width: 500px;
+    max-width: 600px;
     min-width: 380px;
     max-height: 500px;
     overflow-y: auto;
@@ -55,13 +55,23 @@
  
   /* header modal chat buttons */
   .btn-model-chat{
-    width: 50%;
+    width: 48%;
+    border-radius: 0;
     height: auto;
     justify-content: center;
     padding: 0px 20px;
     line-height: 3;
+    margin-right: 10px;
   }
-  .bg-outline-secondary{
+  .group-conversation{
+    display: flex;
+  }
+  .group-conversation > div{
+    width: 320px;
+    margin-right: 10px;
+  }
+
+  /* .bg-outline-secondary{
     border: 1px solid #5ff18363 ;
     color: rgb(6, 6, 6);
     background: #5ff18363;
@@ -70,4 +80,4 @@
     background: #5ff183;
     color: #000;
     border-color: #5ff183;
-  }
+  } */

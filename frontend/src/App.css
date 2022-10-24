@@ -81,3 +81,18 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3b5bfe;
 }
+
+.flex{
+  display: flex;
+}
+.justify-between{
+  justify-content: space-between;
+}
+.mb-3{
+  margin-bottom: 1rem;
+}
+.active-tab{
+    background-color: #4664ff;
+    color: #fff;
+    transform: scale(1.02);
+}
