@@ -3,6 +3,8 @@ import "./model.css";
 import Avatar from "../chatList/Avatar";
 import axios from "axios";
 import { ChatState } from '../../Context/ChatContext'
+// material ui....
+import Button from '@material-ui/core/Button';
 
 function Modal({toggleModel}) {
     const {user, setSelectedChat, chats, setChats} = ChatState();
@@ -59,9 +61,18 @@ function Modal({toggleModel}) {
 
                 <div className="card-header">
                     {/* header content  */}
-                    <div className="flex mb-3">
-                        <button className={`btn btn-model-chat ${activeTab === 0 && 'active-tab '}`} onClick={()=> setActiveTab(0)}> single chat </button>
-                        <button className={`btn btn-model-chat ${activeTab === 1 && 'active-tab '}`} onClick={()=> setActiveTab(1)}> group chat </button>
+                    <div className="flex justify-between mb-3">
+                        {/* <Button variant="outlined" color="primary" className={`btn-model-chat ${activeTab === 0 && 'active-tab '}`} > single chat </Button> */}
+                        {/* <button className={`btn btn-model-chat ${activeTab === 1 && 'active-tab '}`} onClick={()=> setActiveTab(1)}> group chat </button> */}
+                        <Button variant={`${activeTab === 0 ? 'contained' : 'outlined'}`} 
+                            color="primary" className={`btn-model-chat ${activeTab === 0 && 'active-tab '}`} onClick={()=> setActiveTab(0)}> 
+                            single chat 
+                        </Button>
+                        <Button variant={`${activeTab === 1 ? 'contained' : 'outlined'}`} 
+                            color="primary" className={`btn-model-chat ${activeTab === 1 && 'active-tab '}`} onClick={()=> setActiveTab(1)}> 
+                            group chat 
+                        </Button>
+                        {/* <Button variant="outlined" color="primary" className="btn-model-chat active-tab"> Primary </Button> */}
                         {/* <button className="btn btn-model-chat"> single chat </button> */}
                     </div>
                     <div className="chatList__search group-conversation">
@@ -76,7 +87,10 @@ function Modal({toggleModel}) {
                         </div>
                     </div>
                     
-                    {activeTab === 1 &&  <button className="btn btn-model-chat btn-secondary"> create group chat </button>}
+                    {activeTab === 1 &&  <Button variant="contained"
+                                color="primary" className={`btn-model-chat`} onClick={fetchResults} > 
+                                group chat 
+                            </Button>}
                 </div>
                 {/* searched user list */}
                 {
@@ -87,7 +101,7 @@ function Modal({toggleModel}) {
 
                             <div className="userMeta">
                                 <h5 className="user-title"> { user.name } </h5>
-                                <p className=""> <strong>{ user.email }</strong></p>
+                                <p className=""> <strong>{ user.email }</strong></p> 
                             </div>
                         </div>
                     ) )
