@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import "./userProfile.css";
+import { ChatState } from '../../Context/ChatContext';
 
 const UserProfile = () => {
   const navigate = useNavigate();
+  const { user } = ChatState();
 
   function logginOut (e){
     localStorage.removeItem('userInfo')
@@ -20,13 +22,15 @@ const UserProfile = () => {
         <i className="fa fa-sign-out"></i>
         <span>Logout</span>
       </button>
-      <div className="profile__card user__profile__image">
-        <div className="profile__image">
-          <img src="https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg" />
+      {user &&
+        <div className="profile__card user__profile__image">
+          <div className="profile__image">
+            <img src={user.picture} />
+          </div>
+          <h5>{user.name}</h5>
+          <p>{user.email}</p>
         </div>
-        <h4>Fernando Faucho</h4>
-        <p>CEO & Founder at Highly Inc</p>
-      </div>
+      }
       
       {/* <div className="profile__card">
         <div className="card__header" onClick={this.toggleInfo}>

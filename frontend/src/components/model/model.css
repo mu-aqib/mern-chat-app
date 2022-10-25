@@ -56,6 +56,7 @@
   /* header modal chat buttons */
   .btn-model-chat{
     width: 48%;
+    background-color: #eaeaea;
     border-radius: 0;
     height: auto;
     justify-content: center;
@@ -63,6 +64,11 @@
     line-height: 3;
     margin-right: 10px;
   }
+  .active-tab{
+    background-color: #4664ff;
+    color: #fff;
+    transform: scale(1.02);
+}
   .group-conversation{
     display: flex;
   }

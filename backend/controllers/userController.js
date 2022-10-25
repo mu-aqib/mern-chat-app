@@ -41,12 +41,12 @@ const userRegistration = asyncHandler(async (req, res) => {
 const userLogin = asyncHandler(async (req, res)=>{
     const { email, password } = req.body;
     const user = await userModal.findOne( {email} )
-
     if(user && await user.matchPass(password)){
         res.json({
             _id: user._id,
             email: user.email,
             name: user.name,
+            picture: user.picture,
             token: generateJWTToken(user._id)
         })
     }
