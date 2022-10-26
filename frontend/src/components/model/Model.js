@@ -7,14 +7,20 @@ import { ChatState } from '../../Context/ChatContext'
 import Button from '@material-ui/core/Button';
 
 function Modal({toggleModel}) {
+    // context api...
     const {user, setSelectedChat, chats, setChats} = ChatState();
-    let [search, setSearch] = useState("");
+    let [search, setSearch] = useState(""); 
     const [searchResult, setSearchResult] = useState([]);
-    const [activeTab, setActiveTab] = useState(0)
+    const [activeTab, setActiveTab] = useState(0) //toggle state
+    // group chat
+    const [groupChatName, setgroupChatName] = useState('');
+    const [groupChatUsers, setgroupChatUsers] = useState('');
 
     async function fetchResults(){
-        if(!search)
+        if(!search){
             alert("Please enter something to search")
+            return;
+        }
         try{
             const config = {
                 headers: {
@@ -53,6 +59,18 @@ function Modal({toggleModel}) {
         }
     }
 
+    const handleGroup = (uid)=>{
+        if(groupChatUsers.includes(uid)){
+            alert("user alreaady added")
+            return
+        }
+        setgroupChatUsers([...groupChatUsers, uid]);
+    }
+
+    const creatGroupChat = ()=>{
+        
+    }
+
     return (
         <div className="modalBackground">
             <div className="modalContainer">
@@ -62,8 +80,6 @@ function Modal({toggleModel}) {
                 <div className="card-header">
                     {/* header content  */}
                     <div className="flex justify-between mb-3">
-                        {/* <Button variant="outlined" color="primary" className={`btn-model-chat ${activeTab === 0 && 'active-tab '}`} > single chat </Button> */}
-                        {/* <button className={`btn btn-model-chat ${activeTab === 1 && 'active-tab '}`} onClick={()=> setActiveTab(1)}> group chat </button> */}
                         <Button variant={`${activeTab === 0 ? 'contained' : 'outlined'}`} 
                             color="primary" className={`btn-model-chat ${activeTab === 0 && 'active-tab '}`} onClick={()=> setActiveTab(0)}> 
                             single chat 
@@ -72,8 +88,6 @@ function Modal({toggleModel}) {
                             color="primary" className={`btn-model-chat ${activeTab === 1 && 'active-tab '}`} onClick={()=> setActiveTab(1)}> 
                             group chat 
                         </Button>
-                        {/* <Button variant="outlined" color="primary" className="btn-model-chat active-tab"> Primary </Button> */}
-                        {/* <button className="btn btn-model-chat"> single chat </button> */}
                     </div>
                     <div className="chatList__search group-conversation">
                         {activeTab === 1 && <div className="search_wrap">
@@ -87,16 +101,20 @@ function Modal({toggleModel}) {
                         </div>
                     </div>
                     
-                    {activeTab === 1 &&  <Button variant="contained"
-                                color="primary" className={`btn-model-chat`} onClick={fetchResults} > 
+                    {   activeTab === 1 &&  
+                        <div display="flex">
+                            <Button variant="contained" 
+                                color="primary" className={`btn-model-chat`} onClick={creatGroupChat} > 
                                 group chat 
-                            </Button>}
+                            </Button>
+                        </div>
+                    }
                 </div>
                 {/* searched user list */}
                 {
-                    (searchResult.length>0) && 
                     searchResult.map( (user)=>( 
-                        <div className={`chatlist__item add-user`} key={user._id} onClick={()=>accesChat(user._id)} >
+                        <div className={`chatlist__item add-user`} key={user._id} 
+                            onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup(user._id) } >
                             <Avatar image={ user.picture } />
 
                             <div className="userMeta">
