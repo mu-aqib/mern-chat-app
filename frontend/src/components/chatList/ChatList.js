@@ -122,15 +122,12 @@ function ChatList() {
 
   useEffect(()=>{
     if(user) {
-      fetchChats(); 
       setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+      fetchChats(); 
     }
   }, [user])
 
   useEffect( ()=> {
-      // const isChatAvailable = selectedChat
-      // const isChatAvailable = selectedChat;
-      // console.log(isChatAvailable);
       const isChatAvailable = chats.find((chat)=> chat._id === selectedChat._id);
       setactiveUserChat(isChatAvailable);
   }, [selectedChat] )
@@ -152,8 +149,9 @@ function ChatList() {
       </div> 
 
       <div className="chatlist__items">
-
-        {chats.length > 0 && chats.map((item, index) => {
+        {/* {loggedUser && <p>{loggedUser}</p>} */}
+        {loggedUser && chats.length > 0 && chats.map((item, index) => {
+          console.log(item.users, "chat liset item")
           return (
             <ChatListItems
               customEvent = {setActiveChat}

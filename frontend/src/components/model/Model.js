@@ -5,6 +5,7 @@ import axios from "axios";
 import { ChatState } from '../../Context/ChatContext'
 // material ui....
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 function Modal({toggleModel}) {
     // context api...
@@ -59,12 +60,12 @@ function Modal({toggleModel}) {
         }
     }
 
-    const handleGroup = (uid)=>{
-        if(groupChatUsers.includes(uid)){
+    const handleGroup = (user)=>{
+        if(groupChatUsers.includes(user)){
             alert("user alreaady added")
             return
         }
-        setgroupChatUsers([...groupChatUsers, uid]);
+        setgroupChatUsers([...groupChatUsers, user]);
     }
 
     const creatGroupChat = ()=>{
@@ -104,7 +105,7 @@ function Modal({toggleModel}) {
                     {   activeTab === 1 &&  
                         <div display="flex">
                             <Button variant="contained" 
-                                color="primary" className={`btn-model-chat`} onClick={creatGroupChat} > 
+                                color="primary" onClick={creatGroupChat} > 
                                 group chat 
                             </Button>
                         </div>
@@ -114,7 +115,7 @@ function Modal({toggleModel}) {
                 {
                     searchResult.map( (user)=>( 
                         <div className={`chatlist__item add-user`} key={user._id} 
-                            onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup(user._id) } >
+                            onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup(user) } >
                             <Avatar image={ user.picture } />
 
                             <div className="userMeta">
