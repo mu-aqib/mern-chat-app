@@ -17,7 +17,7 @@ function Auth() {
         if(LoginError){
             setTimeout(() => {
                 setLoginError(undefined);
-            }, 3000);
+            }, 2000);
         }
 
         const user_info = JSON.parse(localStorage.getItem('userInfo'))

@@ -20,7 +20,7 @@ function Modal({toggleModel}) {
     function removeAlert(){
         setTimeout(() => {
             setError(undefined)
-        }, 3000);
+        }, 2000);
     }
 
     async function fetchResults(){
@@ -67,6 +67,8 @@ function Modal({toggleModel}) {
     }
 
     const handleGroup = (user)=>{
+        console.log(user)
+        console.log(groupChatUsers)
         if(groupChatUsers.includes(user)){
             alert("user alreaady added")
             return
@@ -98,7 +100,7 @@ function Modal({toggleModel}) {
                     </div>
                     <div className="chatList__search group-conversation">
                         {activeTab === 1 && <div className="search_wrap">
-                            <input type="text" placeholder="Group Name" />
+                            <input type="text" placeholder="Group Name" onChange={(e)=> setgroupChatName(e.target.value)}/>
                         </div>}
                         <div className="search_wrap">
                             <input type="text" placeholder="Add user" onChange={(e)=> { setSearch(e.target.value) } }/>
@@ -112,7 +114,7 @@ function Modal({toggleModel}) {
                         <div display="flex">
                             <Button variant="contained" 
                                 color="primary" onClick={creatGroupChat} > 
-                                group chat 
+                                create group chat 
                             </Button>
                         </div>
                     }
@@ -123,7 +125,7 @@ function Modal({toggleModel}) {
                     <Alert severity="error">{error}</Alert> : 
                     searchResult.map( (user)=>( 
                         <div className={`chatlist__item add-user`} key={user._id} 
-                            onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup(user) } >
+                            onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup(user._id) } >
                             <Avatar image={ user.picture } />
 
                             <div className="userMeta">
