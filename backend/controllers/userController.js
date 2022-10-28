@@ -52,7 +52,7 @@ const userLogin = asyncHandler(async (req, res)=>{
     }
     else{
         res.status(400); 
-        throw new Error('user not available.')
+        throw new Error('Please entre a valid informations')
     }
 })
 

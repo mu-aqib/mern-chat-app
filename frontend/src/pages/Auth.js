@@ -21,7 +21,10 @@ function Auth() {
         if(user_info){
             navigate('/chat')
         }
-    },[navigate])
+        else if(logginError){
+            setTimeout( ()=> setLoginError(undefined) , 3500)
+        }
+    },[navigate, logginError])
 
 
     return (

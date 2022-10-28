@@ -33,7 +33,7 @@ function Login({setLoginError}) {
       console.log(data.response.data)
     }
     catch({response: {data : {message}}}){
-      console.log(message)
+      setLoginError(message)
     }
   }
 
