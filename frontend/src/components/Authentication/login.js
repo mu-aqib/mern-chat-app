@@ -23,17 +23,18 @@ function Login({setLoginError}) {
         password
       } , config)
 
-      // if(data){
-      //   localStorage.setItem('userInfo', JSON.stringify(data));
-      //   navigate('/chat')
-      // }
-      // else{
-        // setLoginError("please Login First")
-      // }
+      if(data){
+        localStorage.setItem('userInfo', JSON.stringify(data));
+        navigate('/chat')
+      }
+      else{
+        setLoginError("please Login First")
+      }
       console.log(data.response.data)
     }
     catch({response: {data : {message}}}){
       setLoginError(message)
+      // alert(message)
     }
   }
 
