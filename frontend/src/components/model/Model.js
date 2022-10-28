@@ -76,8 +76,26 @@ function Modal({toggleModel}) {
         setgroupChatUsers([...groupChatUsers, user]);
     }
 
-    const creatGroupChat = ()=>{
-        // 
+    const creatGroupChat = async ()=>{
+        try{
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                }
+            }
+            const { data } = await axios.post('api/chat/group', {
+                name: groupChatName,
+                users: JSON.stringify(groupChatUsers)
+            }, config);
+
+            if(data){
+                console.log(data)
+                setChats([data, ...setChats])
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     return (

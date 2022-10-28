@@ -80,17 +80,22 @@ const fetchChats = expressAsyncHandler( async (req, res)=>{
 
 // create group chat
 const creatGroupChat = expressAsyncHandler(async (req,res)=>{
+    console.log(req.body.users)
     // if data empty then show res
-    if(!req.body.users && !req.body.chatName){
+    if(!req.body.users && !req.body.name){
         return res.status(400).send({err: "Please fill all the fields. Chats not created"})
     }
+
     // if chat user less than 2 
     const users = JSON.parse(req.body.users)
-    console.log(users)
-    if(users.length < 2){
+
+    if(users.length < 2) {
         return res.status(400).send({err: "Minimum 2 users required to create group chat"})
     }
-    users.push(req.user);   
+
+    // push loggedIn user in the given array
+    users.push(req.user);
+
     try{
         const creatGroupChat = await Chat.create({
             chatName : req.body.name,
