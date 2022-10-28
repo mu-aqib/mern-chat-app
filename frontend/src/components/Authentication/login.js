@@ -18,7 +18,7 @@ function Login({setLoginError}) {
           header: {"Content-type": "application/json",}
       }
 
-      let data = await axios.post('api/user/login', {
+      let {data} = await axios.post('api/user/login', {
         email,
         password
       } , config)
@@ -30,7 +30,7 @@ function Login({setLoginError}) {
       else{
         setLoginError("please Login First")
       }
-      console.log(data.response.data)
+      console.log(data)
     }
     catch({response: {data : {message}}}){
       setLoginError(message)

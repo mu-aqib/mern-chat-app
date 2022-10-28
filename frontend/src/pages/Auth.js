@@ -3,23 +3,13 @@ import '../components/Authentication/auth.css'
 import Login from '../components/Authentication/Login';
 import Register from '../components/Authentication/Register';
 import { useNavigate } from 'react-router-dom';
-// import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 
 function Auth() {
 
-    // const useStyles = makeStyles((theme) => ({
-    //     root: {
-    //       width: '100%',
-    //       '& > * + *': {
-    //         marginTop: theme.spacing(2),
-    //       },
-    //     },
-    // }));
-    // const classes = useStyles();
-
     const [toggleState, setState] = useState('login');
     const [user, setUserState] = useState();
+    const [LoginError, setLoginError] = useState(undefined);
 
     const navigate = useNavigate();
 
@@ -36,8 +26,8 @@ function Auth() {
 
     return (
         <div className="form-container">
-            {/* <div className={classes.root}></div> */}
-            <Alert severity="error">This is an error alert — check it out!</Alert>
+            { LoginError &&  <Alert severity="error">This is an error alert — check it out!</Alert>}
+            
             <div className='btn-box'>
                 <button className={`login ${toggleState == 'login' ? 'active' : ''}`} onClick={()=> setState('login')}>
                     <span>sign in</span>
@@ -48,7 +38,7 @@ function Auth() {
             </div>
             {/* consitional rendering of forms */}
             <div className='auth' >
-                { toggleState == 'login' ? ( <Login /> )  :  ( <Register /> )}
+                { toggleState == 'login' ? ( <Login setLoginError={setLoginError} /> )  :  ( <Register /> )}
             </div>
             
         </div>
