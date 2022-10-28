@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
-function Login() {
+function Login({setLoginError}) {
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
   const navigate = useNavigate();
-
   const submitHandler = async (e)=> {
     e.preventDefault();
     if(!email || !password) {
@@ -19,18 +18,22 @@ function Login() {
           header: {"Content-type": "application/json",}
       }
 
-      let {data} = await axios.post('api/user/login', {
+      let data = await axios.post('api/user/login', {
         email,
         password
       } , config)
 
-      if(data){
-        localStorage.setItem('userInfo', JSON.stringify(data));
-        navigate('/chat')
-      }
+      // if(data){
+      //   localStorage.setItem('userInfo', JSON.stringify(data));
+      //   navigate('/chat')
+      // }
+      // else{
+        // setLoginError("please Login First")
+      // }
+      console.log(data.response.data)
     }
-    catch(err){
-      console.log(err)
+    catch({response: {data : {message}}}){
+      console.log(message)
     }
   }
 
