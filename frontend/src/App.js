@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-// import Nav from "./components/nav/Nav";
 import { Route, Routes} from "react-router-dom";
 // defiened components
 import Auth from "./pages/Auth";
