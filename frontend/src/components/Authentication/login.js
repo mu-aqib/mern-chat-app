@@ -30,11 +30,9 @@ function Login({setLoginError}) {
       else{
         setLoginError("please Login First")
       }
-      console.log(data)
     }
     catch({response: {data : {message}}}){
       setLoginError(message)
-      // alert(message)
     }
   }
 
@@ -49,7 +47,6 @@ function Login({setLoginError}) {
 
           <button type='submit' className="btn btn-info"> <span>login</span> </button>
         </form>
-        {/* 03409075113 */}
       </div>
     </div>
   )

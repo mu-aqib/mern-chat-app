@@ -5,6 +5,7 @@ import axios from "axios";
 import { ChatState } from '../../Context/ChatContext'
 // material ui....
 import Button from '@material-ui/core/Button';
+import { Alert } from '@material-ui/lab';
 
 function Modal({toggleModel}) {
     // context api...
@@ -12,9 +13,15 @@ function Modal({toggleModel}) {
     let [search, setSearch] = useState(""); 
     const [searchResult, setSearchResult] = useState([]);
     const [activeTab, setActiveTab] = useState(0) //toggle state
-    // group chat
     const [groupChatName, setgroupChatName] = useState('');
     const [groupChatUsers, setgroupChatUsers] = useState('');
+    const [error, setError] = useState(undefined);
+
+    function removeAlert(){
+        setTimeout(() => {
+            setError(undefined)
+        }, 3000);
+    }
 
     async function fetchResults(){
         if(!search){
@@ -29,12 +36,12 @@ function Modal({toggleModel}) {
             }
 
             const {data} = await axios.get(`api/user?filter=${search}`, config)
-
-            setSearchResult(data)
+            if(!data.length>0) {setError("User not found"); removeAlert()}
+            else setSearchResult(data)
             
         }
         catch(err){
-            console.log(err)
+            console.log(err, "error occured")
         }
     }
 
@@ -110,8 +117,10 @@ function Modal({toggleModel}) {
                         </div>
                     }
                 </div>
+                
                 {/* searched user list */}
-                {
+                {   error ?  
+                    <Alert severity="error">{error}</Alert> : 
                     searchResult.map( (user)=>( 
                         <div className={`chatlist__item add-user`} key={user._id} 
                             onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup(user) } >

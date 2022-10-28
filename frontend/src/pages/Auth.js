@@ -14,6 +14,12 @@ function Auth() {
     const navigate = useNavigate();
 
     useEffect(()=>{
+        if(LoginError){
+            setTimeout(() => {
+                setLoginError(undefined);
+            }, 3000);
+        }
+
         const user_info = JSON.parse(localStorage.getItem('userInfo'))
 
         setUserState(user_info)
@@ -21,12 +27,12 @@ function Auth() {
         if(user_info){
             navigate('/chat')
         }
-    },[navigate])
+    },[navigate, LoginError])
 
 
     return (
         <div className="form-container">
-            { LoginError &&  <Alert severity="error">This is an error alert — check it out!</Alert>}
+            { LoginError &&  <Alert severity="error"> {LoginError} </Alert>}
             
             <div className='btn-box'>
                 <button className={`login ${toggleState == 'login' ? 'active' : ''}`} onClick={()=> setState('login')}>
