@@ -149,7 +149,6 @@ function ChatList() {
       </div> 
 
       <div className="chatlist__items">
-        {/* {loggedUser && <p>{loggedUser}</p>} */}
         {loggedUser && chats.length > 0 && chats.map((item, index) => {
           console.log(item.users, "chat liset item")
           return (
