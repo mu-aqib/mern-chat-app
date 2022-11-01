@@ -112,7 +112,6 @@ function ChatList() {
 
       const { data } = await axios.get("/api/chat", config);
       setChats(data);
-      setSelectedChat(data[0])
     } 
     catch (error) {
       console.log(error)
@@ -150,7 +149,6 @@ function ChatList() {
 
       <div className="chatlist__items">
         {loggedUser && chats.length > 0 && chats.map((item, index) => {
-          console.log(item.users, "chat liset item")
           return (
             <ChatListItems
               customEvent = {setActiveChat}
