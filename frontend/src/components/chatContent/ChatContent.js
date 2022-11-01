@@ -60,7 +60,7 @@ const ChatContent = () => {
   const [msg, setMsg] = useState('')
 
   // extracting states from context api
-  const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  const { user, selectedChat, setSelectedChat } = ChatState();
 
   function scrollToBottom(){
     msgRef.current.scrollIntoView({ behavior: "smooth" });
@@ -87,9 +87,9 @@ const ChatContent = () => {
           <div className="current-chatting-user">
             <Avatar
               isOnline="active"
-              image="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU"
+              image={ selectedChat.groupIcon || 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU' }
             />
-            <p>Tim Hover</p>
+            <p>{selectedChat.chatName}</p>
           </div>
         </div>
 
@@ -136,7 +136,9 @@ const ChatContent = () => {
     </div>
     :  
     <div className="main__chatcontent"> 
-      <h2 style={{margin: 'auto', color: "#b6b0ac" }}> Click to Select any chat </h2> 
+      <h2 style={{margin: 'auto', color: "#b6b0ac" }}> 
+        <i class="fa fa-commenting-o" aria-hidden="true"></i> Not selecte chat yet.
+      </h2> 
     </div>
   )
 }
