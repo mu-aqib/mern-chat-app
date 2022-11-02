@@ -5,7 +5,6 @@ const User = require("../modal/userModal");
 // single chat creation
 const createChat = expressAsyncHandler( async (req, res)=>{
     const { userId } = req.body;
-    console.log(req.body, userId);
 
     if(!userId){
         return res.sendStatus(400);
@@ -20,14 +19,15 @@ const createChat = expressAsyncHandler( async (req, res)=>{
     })
     .populate("users", "-password")
     .populate("lastMessage");
-    
-    // select user of given latest message
+    // console.log(isChat)
+    // select user of given last message
     isChat = await User.populate(isChat, {
         path: "lastMessage.sender",
         select: "name pic email",
     });
 
     if (isChat.length > 0) {
+        // console.log(isChat)
         console.log("chat laready available with given id " + userId)
         res.send(isChat[0]);
     } else {
