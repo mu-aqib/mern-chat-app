@@ -3,6 +3,7 @@ import "./chatContent.css";
 import Avatar from "../chatList/Avatar";
 import ChatItem from "./ChatItem";
 import { ChatState } from '../../Context/ChatContext';
+import { getUserName, getUser } from '../../config/chatLogics';
 
 const ChatContent = () => {
   const msgRef = createRef(null)
@@ -87,9 +88,12 @@ const ChatContent = () => {
           <div className="current-chatting-user">
             <Avatar
               isOnline="active"
-              image={ selectedChat.groupIcon || 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU' }
+              image={ selectedChat.isGroupChat ? 
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU' : 
+                getUser(user, selectedChat.users).picture
+              }
             />
-            <p>{selectedChat.chatName}</p>
+            <p>{selectedChat.isGroupChat ? selectedChat.chatName : getUserName(user, selectedChat.users)}</p>
           </div>
         </div>
 
