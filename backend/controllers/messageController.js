@@ -1,4 +1,5 @@
 const expressAsyncHandler = require('express-async-handler');
+const Chat = require('../modal/chatModal');
 const messageModal = require('../modal/messageModal');
 const User = require('../modal/userModal');
 
@@ -19,12 +20,16 @@ const creatMessage = expressAsyncHandler(
     
         try{
             let message = await messageModal.create(newMessage);
-    
+            // instance of the populate
             message = await message.populate("sender", "name pic").execPopulate();
             message = await message.populate("chat").execPopulate();
             message = await User.populate(message, {
                 path: 'chat.users',
                 select: "name pic email"
+            })
+
+            await Chat.findByIdAndUpdate(req.body.chatID , {
+                // la
             })
         }
         catch(err){
