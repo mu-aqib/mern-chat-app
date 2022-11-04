@@ -4,38 +4,11 @@ import Avatar from "../chatList/Avatar";
 import ChatItem from "./ChatItem";
 import { ChatState } from '../../Context/ChatContext';
 import { getUserName, getUser } from '../../config/chatLogics';
+import axios from 'axios';
 
 const ChatContent = () => {
   const msgRef = createRef(null)
   const [userChats, setUserChats] = useState([
-    {
-      key: 1,
-      image:
-        "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-      type: "",
-      msg: "Hi Tim, How are you?",
-    },
-    {
-      key: 2,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
-      type: "other",
-      msg: "I am fine.",
-    },
-    {
-      key: 3,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
-      type: "other",
-      msg: "What about you?",
-    },
-    {
-      key: 4,
-      image:
-        "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-      type: "",
-      msg: "Awesome these days.",
-    },
     {
       key: 5,
       image:
@@ -68,8 +41,18 @@ const ChatContent = () => {
   }
 
   // add new message
-  const addNewMessage = ()=>{
-    // add message
+  const addNewMessage = async ()=>{
+    if(msg.length < 1)
+      return;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const data = await axios.post('api/message', {
+      message: msg,
+      
+    }, config)
   }
   
   const onStateChange = (e)=>{
@@ -104,7 +87,9 @@ const ChatContent = () => {
             </button>
           </div>
         </div>
+
       </div>
+
       <div className="content__body">
         <div className="chat__items">
           {userChats.map((itm, index) => {
@@ -121,6 +106,7 @@ const ChatContent = () => {
           <div ref={msgRef} />
         </div>
       </div>
+
       <div className="content__footer">
         <div className="sendNewMessage">
           <button className="addFiles">
@@ -132,7 +118,7 @@ const ChatContent = () => {
             onChange={onStateChange}
             value={msg}
           />
-          <button className="btnSendMsg" id="sendMsgBtn">
+          <button className="btnSendMsg" id="sendMsgBtn" onClick={addNewMessage}>
             <i className="fa fa-paper-plane"></i>
           </button>
         </div>

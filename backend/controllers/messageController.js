@@ -42,4 +42,19 @@ const creatMessage = expressAsyncHandler(
     }
 )
 
-module.exports = {creatMessage}
+const allMessagesByUser = async (req, res)=>{
+    console.log(req.params)
+    try{
+        const messages = await messageModal.find({chat: req.params.chatId})
+        .populate("sender", "name picture email")
+        .populate("chat")
+
+        res.json(messages)
+    }
+    catch(err){
+        res.status(400);
+        throw new Error("Sorry error occured in message " + err.message)
+    }
+}
+
+module.exports = {creatMessage, allMessagesByUser}
