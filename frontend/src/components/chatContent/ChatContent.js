@@ -31,7 +31,8 @@ const ChatContent = () => {
       msg: "I'm taliking about the tutorial",
     },
   ])
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState('');
+  // const [newMessage]
 
   // extracting states from context api
   const { user, selectedChat, setSelectedChat } = ChatState();
@@ -41,18 +42,35 @@ const ChatContent = () => {
   }
 
   // add new message
-  const addNewMessage = async ()=>{
+  const addNewMessage = async (chat_id)=>{
     if(msg.length < 1)
       return;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const data = await axios.post('api/message', {
-      message: msg,
-      
-    }, config)
+      try{
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const {data} = await axios.post('api/message', {
+          message: msg,
+          chatID: chat_id
+        }, config)
+    
+        setMsg("")
+
+        let newData = {
+          key: data._id,
+          image: data.sender.picture,
+          type: "",
+          msg: data.content,
+        };
+        
+        setUserChats([...userChats, newData])
+      }
+      catch(err){
+        console.log(err)
+      }
+    // console.log(chat_id);
   }
   
   const onStateChange = (e)=>{
@@ -118,7 +136,7 @@ const ChatContent = () => {
             onChange={onStateChange}
             value={msg}
           />
-          <button className="btnSendMsg" id="sendMsgBtn" onClick={addNewMessage}>
+          <button className="btnSendMsg" id="sendMsgBtn" onClick={()=>addNewMessage(selectedChat._id)}>
             <i className="fa fa-paper-plane"></i>
           </button>
         </div>
@@ -127,7 +145,7 @@ const ChatContent = () => {
     :  
     <div className="main__chatcontent"> 
       <h2 style={{margin: 'auto', color: "#b6b0ac" }}> 
-        <i class="fa fa-commenting-o" aria-hidden="true"></i> Not selecte chat yet.
+        <i className="fa fa-commenting-o" aria-hidden="true"></i> Not selecte chat yet.
       </h2> 
     </div>
   )
