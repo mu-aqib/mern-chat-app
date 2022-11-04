@@ -64,22 +64,54 @@ const ChatContent = () => {
           type: "",
           msg: data.content,
         };
-        
+
         setUserChats([...userChats, newData])
       }
       catch(err){
         console.log(err)
       }
-    // console.log(chat_id);
+
+  }
+
+  // fetch All chats by selected user
+  const fetchAllMessges = async ()=>{
+    try{
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      
+      let {data} = await axios.get(`api/message/${selectedChat._id}`, config)
+
+      let msgArr = [];
+
+      data.forEach(msg => {
+        msgArr.push({
+          key: msg._id,
+          image: msg.sender.picture,
+          type: "",
+          msg: msg.content,
+        });
+
+      });
+      
+      setUserChats(msgArr);
+
+    }
+    catch(err){
+      console.log(err)
+    }
   }
   
   const onStateChange = (e)=>{
     setMsg(e.target.value)
   }
 
-  useEffect(()=>{
-    // scrollToBottom();
-  }, [userChats])
+  //--------------------    USE-EFFECTS   -----------------//
+  useEffect(()=> {
+    fetchAllMessges();
+  } , [selectedChat]) 
 
   return ( 
     selectedChat ?   
