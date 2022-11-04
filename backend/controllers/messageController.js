@@ -21,18 +21,18 @@ const creatMessage = expressAsyncHandler(
         try{
             let message = await messageModal.create(newMessage);
             // instance of the populate
-            message = await message.populate("sender", "name pic");
+            message = await message.populate("sender", "name picture");
             message = await message.populate("chat");
             message = await User.populate(message, {
                 path: 'chat.users',
-                select: "name pic email"
+                select: "name picture email"
             })
 
+            // find givent ID chat and update message content in lastMessage
             await Chat.findByIdAndUpdate(req.body.chatID , {
                 lastMessage: message,
             })
 
-            console.log(message);
             res.json(message)
         }
         catch(err){

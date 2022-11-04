@@ -19,7 +19,6 @@ const createChat = expressAsyncHandler( async (req, res)=>{
     })
     .populate("users", "-password")
     .populate("lastMessage");
-    // console.log(isChat)
     // select user of given last message
     isChat = await User.populate(isChat, {
         path: "lastMessage.sender",
@@ -27,11 +26,8 @@ const createChat = expressAsyncHandler( async (req, res)=>{
     });
 
     if (isChat.length > 0) {
-        // console.log(isChat)
-        console.log("chat laready available with given id " + userId)
         res.send(isChat[0]);
     } else {
-        console.log("chat created !")
         var chatData = {
             chatName: "sender",
             isGroupChat: false,
@@ -44,7 +40,6 @@ const createChat = expressAsyncHandler( async (req, res)=>{
             "users",
             "-password"
             );
-            console.log("Chat created")
             res.status(200).json(FullChat);
         } catch (error) {
             res.status(400);
@@ -80,7 +75,6 @@ const fetchChats = expressAsyncHandler( async (req, res)=>{
 
 // create group chat
 const creatGroupChat = expressAsyncHandler(async (req,res)=>{
-    console.log(req.body.users)
     // if data empty then show res
     if(!req.body.users && !req.body.name){
         return res.status(400).send({err: "Please fill all the fields. Chats not created"})

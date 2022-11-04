@@ -5,7 +5,7 @@ const message = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        conent: {
+        content: {
             type: String,
             trim: true
         },
