@@ -61,7 +61,7 @@ const ChatContent = () => {
         let newData = {
           key: data._id,
           image: data.sender.picture,
-          type: "",
+          type: "me",
           msg: data.content,
         };
 
@@ -86,18 +86,24 @@ const ChatContent = () => {
 
       let msgArr = [];
 
-      data.forEach(msg => {
-        msgArr.push({
-          key: msg._id,
-          image: msg.sender.picture,
-          type: "",
-          msg: msg.content,
+      if(data.length > 0){
+        data.forEach(msg => {
+
+          let message = {
+            key: msg._id,
+            image: msg.sender.picture,
+            type: (()=>{
+              if(msg.sender._id === user._id) return "me"
+              else return "other"
+            })(),
+            msg: msg.content,
+          }
+          console.log(message)
+          msgArr.push(message);
+
         });
-
-      });
-      
-      setUserChats(msgArr);
-
+        setUserChats(msgArr);
+      }
     }
     catch(err){
       console.log(err)
@@ -110,6 +116,7 @@ const ChatContent = () => {
 
   //--------------------    USE-EFFECTS   -----------------//
   useEffect(()=> {
+    setUserChats([])
     fetchAllMessges();
   } , [selectedChat]) 
 
