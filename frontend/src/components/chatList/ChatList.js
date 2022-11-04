@@ -4,7 +4,7 @@ import ChatListItems from "./ChatListItems";
 import Modal from "../model/Model";
 import { ChatState } from '../../Context/ChatContext';
 import axios from 'axios';
-import { getUserName } from '../../config/chatLogics'
+import { getUserName, getUser } from '../../config/chatLogics'
 
 function ChatList() {
   // const allChatUsers = [
@@ -158,7 +158,7 @@ function ChatList() {
               animationDelay={index + 1}
               activeChat={item === activeUserChat ? "active" : ""}
               isOnline={"active"}
-              image={item.users[1].picture}
+              image={getUser(loggedUser, item.users).picture}
             />
           );
         })}

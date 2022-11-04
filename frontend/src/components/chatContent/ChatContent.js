@@ -98,7 +98,6 @@ const ChatContent = () => {
             })(),
             msg: msg.content,
           }
-          console.log(message)
           msgArr.push(message);
 
         });
