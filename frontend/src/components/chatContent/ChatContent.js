@@ -7,11 +7,34 @@ import { ChatState } from '../../Context/ChatContext';
 import { getUserName, getUser } from '../../config/chatLogics';
 import axios from 'axios';
 
+// material UI
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
+
 const ChatContent = () => {
   const msgRef = createRef(null)
   const [userChats, setUserChats] = useState([])
   const [msg, setMsg] = useState('');
-  // const [newMessage]
+  
+  // Material UI Modal...
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[3],
+      padding: theme.spacing(3, 6, 3),
+    },
+  }));
+  const classes = useStyles();
+  const [open, setOpen] = useState(false)
+
 
   // extracting states from context api
   const { user, selectedChat, setSelectedChat } = ChatState();
@@ -115,9 +138,11 @@ const ChatContent = () => {
   } , [selectedChat]) 
 
   return ( 
-    selectedChat ?   
+    selectedChat ? 
+      
     <div className="main__chatcontent">
       <div className="content__header">
+
         <div className="blocks">
           <div className="current-chatting-user">
             <Avatar
@@ -130,11 +155,11 @@ const ChatContent = () => {
             <p>{selectedChat.isGroupChat ? selectedChat.chatName : getUserName(user, selectedChat.users)}</p>
           </div>
         </div>
-
+              
         <div className="blocks">
           <div className="settings">
-            <button className="btn-nobg">
-              <i className="fa fa-cog"></i>
+            <button className="btn-nobg" onClick={()=> setOpen(true)}>
+              <i className="fa fa-eye"></i>
             </button>
           </div>
         </div>
@@ -177,6 +202,36 @@ const ChatContent = () => {
           </button>
         </div>
       </div>
+
+      {/* view profile of chat user */}
+      <Modal
+          aria-labelledby="user-profile-modal"
+          aria-describedby="user-profile-description"
+          className={classes.modal}
+          open={open}
+          onClose={()=> setOpen(false)}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            {
+              <div className={"profile__card " + classes.paper}>
+                <div className="profile__image">
+                  <img src={getUser(user, selectedChat.users).picture} alt="#"/>
+                </div>
+                <h5 id="user-profile-modal">{getUser(user, selectedChat.users).name}</h5>
+                <p id="user-profile-description">{getUser(user, selectedChat.users).email}</p>
+              </div>
+            }
+            {/* <div className={classes.paper}>
+              <h2 id="user-profile-modal">User name</h2>
+              <p id="user-profile-description">Email</p>
+            </div> */}
+          </Fade>
+        </Modal>
     </div>
     :  
     <div className="main__chatcontent"> 

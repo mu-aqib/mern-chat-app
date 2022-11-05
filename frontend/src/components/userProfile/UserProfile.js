@@ -16,6 +16,7 @@ const UserProfile = () => {
     e.target.parentNode.classList.toggle("open");
   };
 
+
   return (
     <div className="main__userprofile">
       <button className="btn lg-btn btn-logout" onClick={logginOut}>
@@ -34,7 +35,7 @@ const UserProfile = () => {
       
       <div className="profile__card">
         <div className="card__header" onClick={(e)=> toggleInfo(e)}>
-          <h4>Information</h4>
+          <h4>Profile</h4>
           <i className="fa fa-angle-down"></i>
         </div>
         <div className="card__content">

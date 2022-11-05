@@ -40,6 +40,7 @@
 .profile__card .profile__image img {
   object-fit: cover;
   max-width: 100%;
+  height: 100%;
 }
 .profile__card h4 {
   margin-bottom: 0;
