@@ -1,6 +1,7 @@
 .main__chatlist {
+  width: 230px;
   border-right: 1px solid #ebe7fb;
-  padding: 0 40px 0 0px;
+  padding: 0 10px 0 0px;
 }
 .chatlist__heading {
   display: flex;
@@ -15,7 +16,7 @@
   font-size: 18px;
   cursor: pointer;
   padding: 10px;
-  color: #dad9dd;
+  color: #afafaf;
   outline: none;
 }
 .search_wrap {

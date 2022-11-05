@@ -135,17 +135,20 @@ function ChatList() {
   return (
     <div className="main__chatlist">
       {/* add new conversation */}
-      <button className="btn" onClick={()=> {setToggleModel(true);}}>
+      {/* <button className="btn lg-btn" onClick={()=> {setToggleModel(true);}}>
         <i className="fa fa-plus"></i>
         <span>New conversation</span>
-      </button>
+      </button> */}
       <div className="chatlist__heading">
+
         <h2>Chats</h2>
-        <button className="btn-nobg">
-          <i className="fa fa-ellipsis-h"></i>
+        <button className="btn btn-nobg" onClick={()=> {setToggleModel(true);}}>
+          <i className="fa fa-plus"></i>
         </button>
      
       </div> 
+
+      <br />
 
       <div className="chatlist__items">
         {loggedUser && chats.length > 0 && chats.map((item, index) => {

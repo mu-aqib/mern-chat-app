@@ -12,13 +12,13 @@ const UserProfile = () => {
     navigate('/')
   };
 
-  // toggleInfo = (e) => {
-  //   e.target.parentNode.classList.toggle("open");
-  // };
+  const toggleInfo = (e) => {
+    e.target.parentNode.classList.toggle("open");
+  };
 
   return (
     <div className="main__userprofile">
-      <button className="btn btn-logout" onClick={logginOut}>
+      <button className="btn lg-btn btn-logout" onClick={logginOut}>
         <i className="fa fa-sign-out"></i>
         <span>Logout</span>
       </button>
@@ -32,8 +32,8 @@ const UserProfile = () => {
         </div>
       }
       
-      {/* <div className="profile__card">
-        <div className="card__header" onClick={this.toggleInfo}>
+      <div className="profile__card">
+        <div className="card__header" onClick={(e)=> toggleInfo(e)}>
           <h4>Information</h4>
           <i className="fa fa-angle-down"></i>
         </div>
@@ -41,7 +41,7 @@ const UserProfile = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
           ultrices urna a imperdiet egestas. Donec in magna quis ligula
         </div>
-      </div> */}
+      </div>
 
     </div>
   );
