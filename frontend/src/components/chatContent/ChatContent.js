@@ -1,4 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react'
+import moment from 'moment';
 import "./chatContent.css";
 import Avatar from "../chatList/Avatar";
 import ChatItem from "./ChatItem";
@@ -8,29 +9,7 @@ import axios from 'axios';
 
 const ChatContent = () => {
   const msgRef = createRef(null)
-  const [userChats, setUserChats] = useState([
-    {
-      key: 5,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
-      type: "other",
-      msg: "Finally. What's the plan?",
-    },
-    {
-      key: 6,
-      image:
-        "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-      type: "",
-      msg: "what plan mate?",
-    },
-    {
-      key: 7,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU",
-      type: "other",
-      msg: "I'm taliking about the tutorial",
-    },
-  ])
+  const [userChats, setUserChats] = useState([])
   const [msg, setMsg] = useState('');
   // const [newMessage]
 
@@ -43,6 +22,8 @@ const ChatContent = () => {
 
   // add new message
   const addNewMessage = async (chat_id)=>{
+    console.log(moment("2022-11-04T19:02:18.547Z").format("hh:mm a"))
+    
     if(msg.length < 1)
       return;
       try{
@@ -97,6 +78,7 @@ const ChatContent = () => {
               else return "other"
             })(),
             msg: msg.content,
+            date: msg.createdAt
           }
           msgArr.push(message);
 
@@ -112,6 +94,19 @@ const ChatContent = () => {
   const onStateChange = (e)=>{
     setMsg(e.target.value)
   }
+
+  // Function for time
+  // function formatAMPM(time) {
+  //   let date = new Date(time);
+  //   var hours = date.getHours();
+  //   var minutes = date.getMinutes();
+  //   var ampm = hours >= 12 ? 'pm' : 'am';
+  //   hours = hours % 12;
+  //   hours = hours ? hours : 12; // the hour '0' should be '12'
+  //   minutes = minutes < 10 ? '0'+minutes : minutes;
+  //   var strTime = hours + ':' + minutes + ' ' + ampm;
+  //   return strTime;
+  // }
 
   //--------------------    USE-EFFECTS   -----------------//
   useEffect(()=> {
@@ -149,6 +144,7 @@ const ChatContent = () => {
       <div className="content__body">
         <div className="chat__items">
           {userChats.map((itm, index) => {
+            console.log(itm)
             return (
               <ChatItem
                 animationDelay={index + 2}
@@ -156,6 +152,8 @@ const ChatContent = () => {
                 user={itm.type ? itm.type : "me"}
                 msg={itm.msg}
                 image={itm.image}
+                sendedStatus = {moment(itm.date).format("hh:mm a")}
+                // moment(itm.updatedAt).format("hh:mm a") new Date("2022-11-04T02:50:02.736Z")
               />
             );
           })}
