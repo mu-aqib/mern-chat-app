@@ -67,8 +67,6 @@ function Modal({toggleModel}) {
     }
 
     const handleGroup = (user)=>{
-        console.log(user)
-        console.log(groupChatUsers)
         if(groupChatUsers.includes(user)){
             alert("user alreaady added")
             return
@@ -116,6 +114,7 @@ function Modal({toggleModel}) {
                             group chat 
                         </Button>
                     </div>
+
                     <div className="chatList__search group-conversation">
                         {activeTab === 1 && <div className="search_wrap">
                             <input type="text" placeholder="Group Name" onChange={(e)=> setgroupChatName(e.target.value)}/>
@@ -140,7 +139,8 @@ function Modal({toggleModel}) {
                 
                 {/* searched user list */}
                 {   error ?  
-                    <Alert severity="error">{error}</Alert> : 
+                    <Alert severity="error">{error}</Alert> 
+                    : 
                     searchResult.map( (user)=>( 
                         <div className={`chatlist__item add-user`} key={user._id} 
                             onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup(user._id) } >

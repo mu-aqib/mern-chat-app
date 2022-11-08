@@ -169,7 +169,6 @@ const ChatContent = () => {
       <div className="content__body">
         <div className="chat__items">
           {userChats.map((itm, index) => {
-            console.log(itm)
             return (
               <ChatItem
                 animationDelay={index + 2}
@@ -217,14 +216,31 @@ const ChatContent = () => {
           }}
         >
           <Fade in={open}>
+            
             {
               <div className={"profile__card " + classes.paper}>
                 <div className="profile__image">
-                  <img src={getUser(user, selectedChat.users).picture} alt="#"/>
+                  <img src={selectedChat.isGroupChat ? "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" : getUser(user, selectedChat.users).picture} alt="#"/>
                 </div>
-                <h5 id="user-profile-modal">{getUser(user, selectedChat.users).name}</h5>
-                <p id="user-profile-description">{getUser(user, selectedChat.users).email}</p>
+                <h5 id="user-profile-modal"> { selectedChat.isGroupChat ? selectedChat.chatName :  getUser(user, selectedChat.users).name } </h5>
+                {
+                  !selectedChat.isGroupChat ?
+                  <p id="user-profile-description">{getUser(user, selectedChat.users).email}</p>
+                  :
+                  selectedChat.users.map(user=>{
+                    return(
+                      <div className={`chatlist__item add-user`} key={user._id} >
+                        <Avatar image={user.picture} />
+
+                        <div className="userMeta">
+                            <h5 className="user-title"> { user.name } </h5>
+                        </div>
+                      </div>
+                    )
+                  })
+                }
               </div>
+              
             }
           </Fade>
         </Modal>
