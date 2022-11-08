@@ -226,10 +226,6 @@ const ChatContent = () => {
                 <p id="user-profile-description">{getUser(user, selectedChat.users).email}</p>
               </div>
             }
-            {/* <div className={classes.paper}>
-              <h2 id="user-profile-modal">User name</h2>
-              <p id="user-profile-description">Email</p>
-            </div> */}
           </Fade>
         </Modal>
     </div>

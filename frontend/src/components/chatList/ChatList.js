@@ -78,7 +78,9 @@ function ChatList() {
               animationDelay={index + 1}
               activeChat={item === activeUserChat ? "active" : ""}
               isOnline={"active"}
-              image={getUser(loggedUser, item.users).picture}
+              image={item.isGroupChat ? 
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU' : 
+                getUser(loggedUser, item.users).picture}
             />
           );
         })}
