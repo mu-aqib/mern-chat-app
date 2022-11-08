@@ -148,3 +148,13 @@
   background-color: #3b5bfe;
   color: #fff;
 }
+
+
+
+/* group chat users */
+.group_chat_users{
+  width: 250px;
+}
+.group_chat_users button{
+  margin-left: auto;
+}

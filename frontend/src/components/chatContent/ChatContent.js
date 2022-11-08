@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 
 const ChatContent = () => {
@@ -23,14 +25,24 @@ const ChatContent = () => {
   const useStyles = makeStyles((theme) => ({
     modal: {
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      // alignItems: 'center',
+      // justifyContent: 'center',
+      // padding: theme.spacing(3)
     },
     paper: {
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[3],
-      padding: theme.spacing(3, 6, 3),
+      padding: theme.spacing(3, 5, 3),
+      maxHeight: theme.spacing(37),
+      display: 'block',
+      overflowY: 'auto',
+      margin: 'auto'
     },
+    center: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }
   }));
   const classes = useStyles();
   const [open, setOpen] = useState(false)
@@ -219,22 +231,35 @@ const ChatContent = () => {
             
             {
               <div className={"profile__card " + classes.paper}>
-                <div className="profile__image">
-                  <img src={selectedChat.isGroupChat ? "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" : getUser(user, selectedChat.users).picture} alt="#"/>
+                <div className={classes.center}>
+                  <div className="profile__image">
+                    <img src={selectedChat.isGroupChat ? 
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" : 
+                          getUser(user, selectedChat.users).picture} 
+                    alt="#" />
+                  </div>
+
+                  <h5 id="user-profile-modal"> 
+                    { selectedChat.isGroupChat ? selectedChat.chatName :  getUser(user, selectedChat.users).name } 
+                  </h5>
                 </div>
-                <h5 id="user-profile-modal"> { selectedChat.isGroupChat ? selectedChat.chatName :  getUser(user, selectedChat.users).name } </h5>
+
                 {
                   !selectedChat.isGroupChat ?
                   <p id="user-profile-description">{getUser(user, selectedChat.users).email}</p>
                   :
                   selectedChat.users.map(user=>{
                     return(
-                      <div className={`chatlist__item add-user`} key={user._id} >
+                      <div className={`chatlist__item add-user group_chat_users`} key={user._id} >
                         <Avatar image={user.picture} />
 
                         <div className="userMeta">
                             <h5 className="user-title"> { user.name } </h5>
                         </div>
+
+                        <IconButton aria-label="delete" className={`${classes.margin}`}>
+                          <DeleteIcon fontSize="small"/>
+                        </IconButton>
                       </div>
                     )
                   })
@@ -243,7 +268,7 @@ const ChatContent = () => {
               
             }
           </Fade>
-        </Modal>
+      </Modal>
     </div>
     :  
     <div className="main__chatcontent"> 
