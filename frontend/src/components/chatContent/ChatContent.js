@@ -61,35 +61,33 @@ const ChatContent = () => {
 
   // add new message
   const addNewMessage = async (chat_id)=>{
-    console.log(moment("2022-11-04T19:02:18.547Z").format("hh:mm a"))
     
-    if(msg.length < 1)
-      return;
-      try{
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
-        const {data} = await axios.post('api/message', {
-          message: msg,
-          chatID: chat_id
-        }, config)
-    
-        setMsg("")
+    if(msg.length < 1) return;
+    try{
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const {data} = await axios.post('api/message', {
+        message: msg,
+        chatID: chat_id
+      }, config)
+  
+      setMsg("")
 
-        let newData = {
-          key: data._id,
-          image: data.sender.picture,
-          type: "me",
-          msg: data.content,
-        };
+      let newData = {
+        key: data._id,
+        image: data.sender.picture,
+        type: "me",
+        msg: data.content,
+      };
 
-        setUserChats([...userChats, newData])
-      }
-      catch(err){
-        console.log(err)
-      }
+      setUserChats([...userChats, newData])
+    }
+    catch(err){
+      console.log(err)
+    }
 
   }
 
@@ -163,6 +161,17 @@ const ChatContent = () => {
       socket.on('connection', ()=> setSocket_connection(true) )
     }
   }, [user])
+
+  useEffect(()=>{
+    socket.on('message_recived', (newMessage)=>{
+      if(!selectedChatCompare || selectedChatCompare._id !== newMessage.chat._id ){
+        // new notification
+      }
+      else{
+        setUserChats(...userChats, newMessage)
+      }
+    })
+  })
 
   return ( 
     selectedChat ? 
