@@ -24,4 +24,38 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(5000, console.log("now server has been started on port " + PORT)) 
+let server = app.listen(5000, console.log("now server has been started on port " + PORT)) 
+
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors:{
+        origin: 'http://localhost:3000',
+    },
+});
+
+io.on("connection", (socket)=>{
+    console.log("backend connected with socket");
+
+    // socket setup with loggedin user
+    socket.on("setup", (LoggedUser)=>{
+        socket.join(LoggedUser._id);
+        socket.emit("connected")
+    })
+
+    // socket between looges and chated users
+    socket.on('Chat_Conn', (chat_id)=>{
+        socket.join(chat_id);
+        console.log("user joined room " + chat_id)
+    })
+
+    // new message socket to show notification that this usersend messages
+    socket.on("new_Message", (newMsg)=>{
+        const {chat} = newMsg;
+
+        chat.users.forEach(user => {
+            if(user._id === newMsg.sender._id) return;
+
+            socket.in(user._id).emit("message_recived", new_message_recieved)
+        });
+    })
+})

@@ -17,7 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
 const ENDPOINT = "http://localhost:5000";
-var socket, selectedChatCompate;
+var socket, selectedChatCompare;
 
 const ChatContent = () => {
   const msgRef = createRef(null)
@@ -152,6 +152,7 @@ const ChatContent = () => {
   useEffect(()=> {
     setUserChats([])
     fetchAllMessges();
+    selectedChatCompare = selectedChat;
   } , [selectedChat]) 
 
   // socket useEffect

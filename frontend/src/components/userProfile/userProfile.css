@@ -38,8 +38,9 @@
   margin-bottom: 10px;
 }
 .profile__card .profile__image img {
+  -o-object-fit: cover;
   object-fit: cover;
-  max-width: 100%;
+  width: 100%;
   height: 100%;
 }
 .profile__card h4 {
