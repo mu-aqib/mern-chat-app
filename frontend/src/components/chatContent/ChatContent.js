@@ -82,7 +82,7 @@ const ChatContent = () => {
         type: "me",
         msg: data.content,
       };
-
+      socket.emit('new_Message', data)
       setUserChats([...userChats, newData])
     }
     catch(err){
@@ -163,14 +163,27 @@ const ChatContent = () => {
   }, [user])
 
   useEffect(()=>{
-    socket.on('message_recived', (newMessage)=>{
-      if(!selectedChatCompare || selectedChatCompare._id !== newMessage.chat._id ){
-        // new notification
-      }
-      else{
-        setUserChats(...userChats, newMessage)
-      }
-    })
+    if(socket){
+      socket.on('message_recived', (newMessage)=>{
+        if(!selectedChatCompare || selectedChatCompare._id !== newMessage.chat._id ){
+          // new notification
+        }
+        else{
+          console.log(newMessage, " socket ");
+          let message = {
+            key: newMessage._id,
+            image: newMessage.sender.picture,
+            type: (()=>{
+              if(newMessage.sender._id === user._id) return "me"
+              else return "other"
+            })(),
+            msg: newMessage.content,
+            date: newMessage.createdAt
+          }
+          setUserChats([...userChats, message])
+        }
+      })
+    }
   })
 
   return ( 

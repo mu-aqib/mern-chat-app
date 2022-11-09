@@ -47,15 +47,20 @@ io.on("connection", (socket)=>{
         socket.join(chat_id);
         console.log("user joined room " + chat_id)
     })
+    // socket.on('new_chat', (chat)=>{
+    //     console.log("user joined room with new chat " + chat)
+    // })
 
     // new message socket to show notification that this usersend messages
     socket.on("new_Message", (newMsg)=>{
+        // console.log("new_Message socket", newMsg)
         const {chat} = newMsg;
+        console.log("new_Message socket", chat)
 
         chat.users.forEach(user => {
             if(user._id === newMsg.sender._id) return;
-
-            socket.in(user._id).emit("message_recived", new_message_recieved)
+            // socket 'in' mean that inside user room send that message.
+            socket.in(user._id).emit("message_recived", newMsg)
         });
     })
 })

@@ -43,7 +43,6 @@ const creatMessage = expressAsyncHandler(
 )
 
 const allMessagesByUser = async (req, res)=>{
-    console.log(req.params)
     try{
         const messages = await messageModal.find({chat: req.params.chatId})
         .populate("sender", "name picture email")
