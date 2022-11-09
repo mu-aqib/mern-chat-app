@@ -6,6 +6,7 @@ import ChatItem from "./ChatItem";
 import { ChatState } from '../../Context/ChatContext';
 import { getUserName, getUser } from '../../config/chatLogics';
 import axios from 'axios';
+import io from 'socket.io-client'
 
 // material UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,11 +16,14 @@ import Fade from '@material-ui/core/Fade';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
+const ENDPOINT = "http://localhost:5000";
+var socket, selectedChatCompate;
 
 const ChatContent = () => {
   const msgRef = createRef(null)
   const [userChats, setUserChats] = useState([])
   const [msg, setMsg] = useState('');
+  const[socket_conection, setSocket_connection] = useState(false);
   
   // Material UI Modal...
   const useStyles = makeStyles((theme) => ({
@@ -45,7 +49,7 @@ const ChatContent = () => {
     }
   }));
   const classes = useStyles();
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false) // modal state
 
 
   // extracting states from context api
@@ -100,9 +104,9 @@ const ChatContent = () => {
       
       let {data} = await axios.get(`api/message/${selectedChat._id}`, config)
 
-      let msgArr = [];
-
+      
       if(data.length > 0){
+        let msgArr = [];
         data.forEach(msg => {
 
           let message = {
@@ -119,6 +123,7 @@ const ChatContent = () => {
 
         });
         setUserChats(msgArr);
+        socket.emit('Chat_Conn', selectedChat._id)
       }
     }
     catch(err){
@@ -148,6 +153,15 @@ const ChatContent = () => {
     setUserChats([])
     fetchAllMessges();
   } , [selectedChat]) 
+
+  // socket useEffect
+  useEffect(()=>{
+    if(user){
+      socket = io(ENDPOINT);
+      socket.emit('setup', user);
+      socket.on('connection', ()=> setSocket_connection(true) )
+    }
+  }, [user])
 
   return ( 
     selectedChat ? 
