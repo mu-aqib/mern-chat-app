@@ -39,7 +39,7 @@ io.on("connection", (socket)=>{
     // socket setup with loggedin user
     socket.on("setup", (LoggedUser)=>{
         socket.join(LoggedUser._id);
-        socket.emit("connected")
+        socket.emit("Socket_connection")
     })
 
     // socket between looges and chated users
@@ -47,9 +47,9 @@ io.on("connection", (socket)=>{
         socket.join(chat_id);
         console.log("user joined room " + chat_id)
     })
-    // socket.on('new_chat', (chat)=>{
-    //     console.log("user joined room with new chat " + chat)
-    // })
+    // typing animation socket
+    socket.on('typing', (room)=> socket.in(room).emit('typing'))
+    socket.on('end_typing', (room)=> socket.in(room).emit('end_typing'))
 
     // new message socket to show notification that this usersend messages
     socket.on("new_Message", (newMsg)=>{
@@ -59,6 +59,7 @@ io.on("connection", (socket)=>{
 
         chat.users.forEach(user => {
             if(user._id === newMsg.sender._id) return;
+            
             // socket 'in' mean that inside user room send that message.
             socket.in(user._id).emit("message_recived", newMsg)
         });

@@ -9,7 +9,7 @@ import { getUserName, getUser } from '../../config/chatLogics'
 function ChatList() {
   const [loggedUser, setLoggedUser] = useState(null);
   const [toggleModel, setToggleModel] = useState(false)
-  const [activeUserChat, setactiveUserChat] = useState('')
+  const [activeUserChat, setactiveUserChat] = useState('dfsdf')
 
   // extracting states from context api
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
@@ -44,18 +44,15 @@ function ChatList() {
   }, [user])
 
   useEffect( ()=> {
+    // if(selectedChat){
       const isChatAvailable = chats.find((chat)=> chat._id === selectedChat._id);
       setactiveUserChat(isChatAvailable);
+    // }
   }, [selectedChat] )
 
   
   return (
-    <div className="main__chatlist">
-      {/* add new conversation */}
-      {/* <button className="btn lg-btn" onClick={()=> {setToggleModel(true);}}>
-        <i className="fa fa-plus"></i>
-        <span>New conversation</span>
-      </button> */}
+    <div className="main__chatlist"> 
       <div className="chatlist__heading">
 
         <h2>Chats</h2>

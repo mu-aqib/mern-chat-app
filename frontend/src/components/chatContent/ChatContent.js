@@ -24,6 +24,7 @@ const ChatContent = () => {
   const [userChats, setUserChats] = useState([])
   const [msg, setMsg] = useState('');
   const[socket_conection, setSocket_connection] = useState(false);
+  const [istyping, setIstyping] = useState(false);
   
   // Material UI Modal...
   const useStyles = makeStyles((theme) => ({
@@ -133,19 +134,6 @@ const ChatContent = () => {
     setMsg(e.target.value)
   }
 
-  // Function for time
-  // function formatAMPM(time) {
-  //   let date = new Date(time);
-  //   var hours = date.getHours();
-  //   var minutes = date.getMinutes();
-  //   var ampm = hours >= 12 ? 'pm' : 'am';
-  //   hours = hours % 12;
-  //   hours = hours ? hours : 12; // the hour '0' should be '12'
-  //   minutes = minutes < 10 ? '0'+minutes : minutes;
-  //   var strTime = hours + ':' + minutes + ' ' + ampm;
-  //   return strTime;
-  // }
-
   //--------------------    USE-EFFECTS   -----------------//
   useEffect(()=> {
     setUserChats([])
@@ -158,7 +146,9 @@ const ChatContent = () => {
     if(user){
       socket = io(ENDPOINT);
       socket.emit('setup', user);
-      socket.on('connection', ()=> setSocket_connection(true) )
+      socket.on('Socket_connection', ()=> setSocket_connection(true) )
+      socket.on("typing", ()=> setIstyping(true))
+      socket.on("end_typing", ()=> setIstyping(false))
     }
   }, [user])
 
@@ -169,7 +159,6 @@ const ChatContent = () => {
           // new notification
         }
         else{
-          console.log(newMessage, " socket ");
           let message = {
             key: newMessage._id,
             image: newMessage.sender.picture,
@@ -185,6 +174,8 @@ const ChatContent = () => {
       })
     }
   })
+
+  // typing handler
 
   return ( 
     selectedChat ? 
@@ -317,3 +308,37 @@ const ChatContent = () => {
 }
 
 export default ChatContent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function for time
+// function formatAMPM(time) {
+//   let date = new Date(time);
+//   var hours = date.getHours();
+//   var minutes = date.getMinutes();
+//   var ampm = hours >= 12 ? 'pm' : 'am';
+//   hours = hours % 12;
+//   hours = hours ? hours : 12; // the hour '0' should be '12'
+//   minutes = minutes < 10 ? '0'+minutes : minutes;
+//   var strTime = hours + ':' + minutes + ' ' + ampm;
+//   return strTime;
+// }

@@ -6,6 +6,7 @@ import { ChatState } from '../../Context/ChatContext'
 // material ui....
 import Button from '@material-ui/core/Button';
 import { Alert } from '@material-ui/lab';
+import Badge from '@material-ui/core/Badge';
 
 function Modal({toggleModel}) {
     // context api...
@@ -75,6 +76,10 @@ function Modal({toggleModel}) {
     }
 
     const creatGroupChat = async ()=>{
+        if(groupChatUsers.length < 2){
+            alert("Please select at least two users");
+            return;
+        }
         try{
             const config = {
                 headers: {
@@ -87,12 +92,13 @@ function Modal({toggleModel}) {
             }, config);
 
             if(data){
-                console.log(data)
-                setChats([data, ...setChats])
+                setSelectedChat(data);
+                setChats([data, ...chats]);
+                toggleModel(false);
             }
         }
-        catch(err){
-            console.log(err);
+        catch({response: {data: {err}}}){
+            // alert(err);
         }
     }
 
@@ -116,9 +122,12 @@ function Modal({toggleModel}) {
                     </div>
 
                     <div className="chatList__search group-conversation">
-                        {activeTab === 1 && <div className="search_wrap">
-                            <input type="text" placeholder="Group Name" onChange={(e)=> setgroupChatName(e.target.value)}/>
-                        </div>}
+                        { 
+                            activeTab === 1 && 
+                            <div className="search_wrap">
+                                <input type="text" placeholder="Group Name" onChange={(e)=> setgroupChatName(e.target.value)}/>
+                            </div>
+                        }
                         <div className="search_wrap">
                             <input type="text" placeholder="Add user" onChange={(e)=> { setSearch(e.target.value) } }/>
                             <button className="search-btn" onClick={fetchResults}>
