@@ -140,6 +140,7 @@ const ChatContent = () => {
     if(!socket_conection) return;
 
     if(!typing){
+      console.log("socket")
       setTyping(true);
       socket.emit("typing", selectedChat._id)
       let old_time = new Date().getTime();

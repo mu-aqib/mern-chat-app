@@ -47,15 +47,14 @@ io.on("connection", (socket)=>{
         socket.join(chat_id);
         console.log("user joined room " + chat_id)
     })
+
     // typing animation socket
     socket.on('typing', (room)=> socket.in(room).emit('typing'))
     socket.on('end_typing', (room)=> socket.in(room).emit('end_typing'))
 
     // new message socket to show notification that this usersend messages
     socket.on("new_Message", (newMsg)=>{
-        // console.log("new_Message socket", newMsg)
         const {chat} = newMsg;
-        console.log("new_Message socket", chat)
 
         chat.users.forEach(user => {
             if(user._id === newMsg.sender._id) return;
@@ -63,5 +62,10 @@ io.on("connection", (socket)=>{
             // socket 'in' mean that inside user room send that message.
             socket.in(user._id).emit("message_recived", newMsg)
         });
+    })
+
+    socket.off("setup", ()=>{
+        console.log("user disconnected !", LoggedUser._id);
+        socket.leave(LoggedUser._id)
     })
 })
