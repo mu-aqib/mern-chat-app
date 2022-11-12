@@ -25,6 +25,7 @@ const ChatContent = () => {
   const [msg, setMsg] = useState('');
   const[socket_conection, setSocket_connection] = useState(false);
   const [istyping, setIstyping] = useState(false);
+  const [typing, setTyping] = useState(false);
   
   // Material UI Modal...
   const useStyles = makeStyles((theme) => ({
@@ -130,8 +131,25 @@ const ChatContent = () => {
     }
   }
   
+  // typing handler input message
   const onStateChange = (e)=>{
-    setMsg(e.target.value)
+    setMsg(e.target.value);
+    if(!socket_conection) return;
+
+    if(!typing){
+      setTyping(true);
+      socket.emit("typing", selectedChat._id)
+      let old_time = new Date().getTime();
+      let time = 2000;
+      setTimeout(()=>{
+        let newTime = new Date().getTime();
+        const diff_time = newTime - old_time;
+        if(diff_time >= time){
+          socket.emit('end_typing', selectedChat._id);
+          setTyping(false)
+        }
+      }, time)
+    }
   }
 
   //--------------------    USE-EFFECTS   -----------------//
@@ -174,8 +192,6 @@ const ChatContent = () => {
       })
     }
   })
-
-  // typing handler
 
   return ( 
     selectedChat ? 
@@ -226,6 +242,7 @@ const ChatContent = () => {
       </div>
 
       <div className="content__footer">
+        {istyping && <p>Loading...</p>}
         <div className="sendNewMessage">
           <button className="addFiles">
             <i className="fa fa-plus"></i>
