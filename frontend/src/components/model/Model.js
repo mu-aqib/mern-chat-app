@@ -6,22 +6,47 @@ import { ChatState } from '../../Context/ChatContext'
 // material ui....
 import Button from '@material-ui/core/Button';
 import { Alert } from '@material-ui/lab';
+import { makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  badgeShape: {
+    backgroundColor: theme.palette.primary.main,
+    padding: '5px 10px',
+    borderRadius: '7px',
+    color: '#fff',
+    fontSize: '12px'
+  },
+}));
 
 function Modal({toggleModel}) {
+    const classes = useStyles();
     // context api...
     const {user, setSelectedChat, chats, setChats} = ChatState();
     let [search, setSearch] = useState(""); 
     const [searchResult, setSearchResult] = useState([]);
     const [activeTab, setActiveTab] = useState(0) //toggle state
     const [groupChatName, setgroupChatName] = useState('');
-    const [groupChatUsers, setgroupChatUsers] = useState('');
+    const [groupChatUsers, setgroupChatUsers] = useState([]);
     const [error, setError] = useState(undefined);
 
     function removeAlert(){
         setTimeout(() => {
             setError(undefined)
         }, 2000);
+    }
+
+    function toggleTabs(num){
+        setSearch('');
+        setgroupChatName('');
+        setSearchResult([]);
+        setActiveTab(num);
     }
 
     async function fetchResults(){
@@ -81,6 +106,7 @@ function Modal({toggleModel}) {
             return;
         }
         try{
+            let users_IDs = groupChatUsers.map(u=> u._id);
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
@@ -88,7 +114,7 @@ function Modal({toggleModel}) {
             }
             const { data } = await axios.post('api/chat/group', {
                 name: groupChatName,
-                users: JSON.stringify(groupChatUsers)
+                users: JSON.stringify(users_IDs)
             }, config);
 
             if(data){
@@ -98,7 +124,7 @@ function Modal({toggleModel}) {
             }
         }
         catch({response: {data: {err}}}){
-            // alert(err);
+            alert(err);
         }
     }
 
@@ -112,37 +138,59 @@ function Modal({toggleModel}) {
                     {/* header content  */}
                     <div className="flex justify-between mb-3">
                         <Button variant={`${activeTab === 0 ? 'contained' : 'outlined'}`} 
-                            color="primary" className={`btn-model-chat ${activeTab === 0 && 'active-tab '}`} onClick={()=> setActiveTab(0)}> 
+                            color="primary" className={`btn-model-chat ${activeTab === 0 && 'active-tab '}`} onClick={()=> toggleTabs(0)}> 
                             single chat 
                         </Button>
                         <Button variant={`${activeTab === 1 ? 'contained' : 'outlined'}`} 
-                            color="primary" className={`btn-model-chat ${activeTab === 1 && 'active-tab '}`} onClick={()=> setActiveTab(1)}> 
+                            color="primary" className={`btn-model-chat ${activeTab === 1 && 'active-tab '}`} onClick={()=> toggleTabs(1)}> 
                             group chat 
                         </Button>
                     </div>
 
                     <div className="chatList__search group-conversation">
                         { 
-                            activeTab === 1 && 
-                            <div className="search_wrap">
-                                <input type="text" placeholder="Group Name" onChange={(e)=> setgroupChatName(e.target.value)}/>
-                            </div>
+                            activeTab === 1 ? 
+                            // group chat
+                            <>
+                                <div className="search_wrap">
+                                    <input type="text" placeholder="Group Name" value={""} onChange={(e)=> setgroupChatName(e.target.value)}/>
+                                </div>
+                                <div className="search_wrap">
+                                    <input type="text" placeholder="Add user" onChange={(e)=> { setSearch(e.target.value) } }/>
+                                    <button className="search-btn" onClick={fetchResults}>
+                                        <i className="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </>
+                            :
+                            // single chat
+                            <>
+                                <div className="search_wrap">
+                                    <input type="text" placeholder="Add user" onChange={(e)=> { setSearch(e.target.value) } }/>
+                                    <button className="search-btn" onClick={fetchResults}>
+                                        <i className="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </>
                         }
-                        <div className="search_wrap">
-                            <input type="text" placeholder="Add user" onChange={(e)=> { setSearch(e.target.value) } }/>
-                            <button className="search-btn" onClick={fetchResults}>
-                                <i className="fa fa-search"></i>
-                            </button>
-                        </div>
                     </div>
                     
                     {   activeTab === 1 &&  
-                        <div display="flex">
-                            <Button variant="contained" 
-                                color="primary" onClick={creatGroupChat} > 
-                                create group chat 
-                            </Button>
-                        </div>
+                        <>
+                            <div className={classes.root}>
+                                {groupChatUsers.map( (user)=>( 
+                                    <Badge color="secondary" badgeContent={'x'} className={classes.badgeShape}>
+                                        <div className="">  </div> {user.name}
+                                    </Badge>
+                                ) )}
+                            </div>
+                            <div display="flex">
+                                <Button variant="contained" 
+                                    color="primary" onClick={creatGroupChat} > 
+                                    create group chat 
+                                </Button>
+                            </div>
+                        </>
                     }
                 </div>
                 
@@ -152,7 +200,7 @@ function Modal({toggleModel}) {
                     : 
                     searchResult.map( (user)=>( 
                         <div className={`chatlist__item add-user`} key={user._id} 
-                            onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup(user._id) } >
+                            onClick={ ()=> activeTab === 0 ? accesChat(user._id) : handleGroup({_id: user._id, name: user.name}) } >
                             <Avatar image={ user.picture } />
 
                             <div className="userMeta">
