@@ -15,6 +15,9 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import Lottie from 'lottie-react';
+import lottieTyping from '../lottie_Animations/typing.json'
+
 
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
@@ -242,7 +245,11 @@ const ChatContent = () => {
       </div>
 
       <div className="content__footer">
-        {istyping && <p>Loading...</p>}
+        { 
+          istyping && <div>
+            <Lottie animationData={lottieTyping} loop={true} autoplay={true} style={{width: '50px',}} />  
+          </div>
+        }
         <div className="sendNewMessage">
           <button className="addFiles">
             <i className="fa fa-plus"></i>
