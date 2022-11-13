@@ -153,10 +153,10 @@ function Modal({toggleModel}) {
                             // group chat
                             <>
                                 <div className="search_wrap">
-                                    <input type="text" placeholder="Group Name" value={""} onChange={(e)=> setgroupChatName(e.target.value)}/>
+                                    <input type="text" placeholder="Group Name" value={groupChatName} onChange={(e)=> setgroupChatName(e.target.value)}/>
                                 </div>
                                 <div className="search_wrap">
-                                    <input type="text" placeholder="Add user" onChange={(e)=> { setSearch(e.target.value) } }/>
+                                    <input type="text" placeholder="Add user" value={search} onChange={(e)=> { setSearch(e.target.value) } }/>
                                     <button className="search-btn" onClick={fetchResults}>
                                         <i className="fa fa-search"></i>
                                     </button>
@@ -164,14 +164,13 @@ function Modal({toggleModel}) {
                             </>
                             :
                             // single chat
-                            <>
-                                <div className="search_wrap">
-                                    <input type="text" placeholder="Add user" onChange={(e)=> { setSearch(e.target.value) } }/>
-                                    <button className="search-btn" onClick={fetchResults}>
-                                        <i className="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </>
+               
+                            <div className="search_wrap">
+                                <input type="text" placeholder="Add user" value={search} onChange={(e)=> { setSearch(e.target.value) } }/>
+                                <button className="search-btn" onClick={fetchResults}>
+                                    <i className="fa fa-search"></i>
+                                </button>
+                            </div>
                         }
                     </div>
                     

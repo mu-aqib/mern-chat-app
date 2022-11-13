@@ -307,12 +307,18 @@ const ChatContent = () => {
                         <Avatar image={user.picture} />
 
                         <div className="userMeta">
-                            <h5 className="user-title"> { user.name } </h5>
+                            <h5 className="user-title"> 
+                              { user.name }
+                              <br />
+                              <small style={{color: '#ff6348',fontSize: '10px'}}>{selectedChat.GroupAdmin._id === user._id && "Admin"}</small>
+                            </h5>
                         </div>
 
-                        <IconButton aria-label="delete" className={`${classes.margin}`}>
-                          <DeleteIcon fontSize="small"/>
-                        </IconButton>
+                        { selectedChat.GroupAdmin._id !== user._id  &&
+                          <IconButton aria-label="delete" className={`${classes.margin}`}>
+                            <DeleteIcon fontSize="small"/>
+                          </IconButton>
+                        }
                       </div>
                     )
                   })
