@@ -13,8 +13,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import SaveIcon from '@material-ui/icons/Save';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import TextField from '@material-ui/core/TextField';
 import Lottie from 'lottie-react';
 import lottieTyping from '../lottie_Animations/typing.json'
 
@@ -29,14 +32,14 @@ const ChatContent = () => {
   const[socket_conection, setSocket_connection] = useState(false);
   const [istyping, setIstyping] = useState(false);
   const [typing, setTyping] = useState(false);
+
+  let [rename_group, setEditGroup] = useState(false);
+  const [groupChatName, setgroupChatName] = useState('');
   
   // Material UI Modal...
   const useStyles = makeStyles((theme) => ({
     modal: {
       display: 'flex',
-      // alignItems: 'center',
-      // justifyContent: 'center',
-      // padding: theme.spacing(3)
     },
     paper: {
       backgroundColor: theme.palette.background.paper,
@@ -51,6 +54,18 @@ const ChatContent = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center'
+    },
+    readOnly : {
+      backgroundColor: '#ccc',
+      border: 'none'
+    },
+    file_input: {
+      position: 'absolute',
+      top: 0, left: 0,
+      width: '100%', 
+      height: '100%',
+      opacity: 0,
+      cursor: 'pointer'
     }
   }));
   const classes = useStyles();
@@ -59,7 +74,7 @@ const ChatContent = () => {
 
   // extracting states from context api
   const { user, selectedChat, setSelectedChat } = ChatState();
-
+  
   function scrollToBottom(){
     msgRef.current.scrollIntoView({ behavior: "smooth" });
   }
@@ -140,7 +155,6 @@ const ChatContent = () => {
     if(!socket_conection) return;
 
     if(!typing){
-      console.log("socket")
       setTyping(true);
       socket.emit("typing", selectedChat._id)
       let old_time = new Date().getTime();
@@ -160,6 +174,8 @@ const ChatContent = () => {
   useEffect(()=> {
     setUserChats([])
     fetchAllMessges();
+    // for enaming group chat name...
+    if(selectedChat.isGroupChat) setgroupChatName(selectedChat.chatName) 
     selectedChatCompare = selectedChat;
   } , [selectedChat]) 
 
@@ -286,15 +302,41 @@ const ChatContent = () => {
               <div className={"profile__card " + classes.paper}>
                 <div className={classes.center}>
                   <div className="profile__image">
-                    <img src={selectedChat.isGroupChat ? 
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" : 
-                          getUser(user, selectedChat.users).picture} 
-                    alt="#" />
+
+                    <label for="file-input">
+                      <img src={selectedChat.isGroupChat ? 
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" : 
+                            getUser(user, selectedChat.users).picture} 
+                      alt="#" />
+                    </label>
+
+                    <input className={classes.file_input} type="file"/>
                   </div>
 
-                  <h5 id="user-profile-modal"> 
-                    { selectedChat.isGroupChat ? selectedChat.chatName :  getUser(user, selectedChat.users).name } 
-                  </h5>
+                  <div className="user-profile-title"> 
+                    
+                    { selectedChat.isGroupChat 
+                      ? 
+                      <>
+                        <TextField
+                          variant="outlined"
+                          size='small'
+                          margin='dense'
+                          value={groupChatName}
+                          InputProps={{
+                            readOnly: rename_group ? false : true,
+                          }}
+                          onChange={(e)=> setgroupChatName(e.target.value)}
+                          className={!rename_group && 'readOnly'}
+                        />
+                        <IconButton aria-label="delete" className={`${classes.margin}`} onClick={()=> setEditGroup(!rename_group)}>
+                            {rename_group ? <SaveIcon fontSize="small"/> : <EditIcon fontSize="small"/> }
+                        </IconButton>
+                      </>
+                      :
+                      <h5>{getUser(user, selectedChat.users).name}</h5>
+                    } 
+                  </div>
                 </div>
 
                 {

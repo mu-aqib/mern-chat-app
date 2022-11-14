@@ -65,6 +65,7 @@ function ChatList() {
       <br />
 
       <div className="chatlist__items">
+        
         {loggedUser && chats.length > 0 && chats.map((item, index) => {
           return (
             <ChatListItems

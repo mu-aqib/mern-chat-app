@@ -158,3 +158,13 @@
 .group_chat_users button{
   margin-left: auto;
 }
+/* user profile header on modal */
+.user-profile-title{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.readOnly input{
+  background-color: #ebe7fb;
+  border: 0;
+}
