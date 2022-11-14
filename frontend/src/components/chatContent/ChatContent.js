@@ -170,6 +170,32 @@ const ChatContent = () => {
     }
   }
 
+  // update profile...
+  const updateFileUpload = (e)=>{
+    const file = e.target.files[0]
+    let url = URL.createObjectURL(file)
+    if(file){
+      if(file.type === "image/jpeg" || file.type === "image/png"){
+        const data = new FormData();
+        data.append('file', file);
+        data.append('upload_preset', 'chat-app')
+        data.append('cloudinary_name', 'cloudymedia313');
+        fetch(`https://api.cloudinary.com/v1_1/cloudymedia313/image/upload`, {
+            method: 'post',
+            body: data,
+        })
+        .then(res => res.json() )
+        .then(data => {
+            console.log(data)
+        } )
+        .catch(err => console.log(err))
+      }
+    }
+    else{
+        alert('file not defined')
+    }
+  }
+
   //--------------------    USE-EFFECTS   -----------------//
   useEffect(()=> {
     setUserChats([])
@@ -303,14 +329,12 @@ const ChatContent = () => {
                 <div className={classes.center}>
                   <div className="profile__image">
 
-                    <label for="file-input">
-                      <img src={selectedChat.isGroupChat ? 
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" : 
-                            getUser(user, selectedChat.users).picture} 
-                      alt="#" />
-                    </label>
-
-                    <input className={classes.file_input} type="file"/>
+                    <img src={selectedChat.isGroupChat ? 
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" : 
+                          getUser(user, selectedChat.users).picture} 
+                    alt="#" />
+              
+                    <input className={classes.file_input} type="file" onChange={updateFileUpload}/>
                   </div>
 
                   <div className="user-profile-title"> 
