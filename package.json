@@ -19,9 +19,11 @@
   "homepage": "https://github.com/mu-aqib/mern-chat-app#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.32.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "express-async-handler": "^1.2.0",
+    "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.4",
     "nodemon": "^2.0.20",

@@ -1,6 +1,15 @@
+
 const asyncHandler = require('express-async-handler');
 const userModal = require('../modal/userModal');
 const generateJWTToken = require('../config/generatToken');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_SECRET_KEY,
+    secure: true
+});
 
 // registration function
 const userRegistration = asyncHandler(async (req, res) => {
@@ -71,4 +80,22 @@ const getAllUsers = asyncHandler( async (req, res)=>{
     res.send(users)
 } )
 
-module.exports = { userRegistration, userLogin, getAllUsers }
+
+const uploadCloudinaryFile = async (req,res)=>{
+    console.log(process.env.CLOUDINARY_SECRET_KEY)
+    const {group_img} = req.files
+    try{
+
+        cloudinary.uploader.upload(group_img.tempFilePath, (err, result)=>{
+            console.log(result)
+        });                  
+
+        res.send("result");
+    }
+    catch(err){         
+        console.log(err)
+    }                    
+
+}
+
+module.exports = { userRegistration, userLogin, getAllUsers, uploadCloudinaryFile }

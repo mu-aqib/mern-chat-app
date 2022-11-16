@@ -171,24 +171,23 @@ const ChatContent = () => {
   }
 
   // update profile...
-  const updateFileUpload = (e)=>{
+  const updateFileUpload = async (e)=>{
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
     const file = e.target.files[0]
-    let url = URL.createObjectURL(file)
+    // let url = URL.createObjectURL(file)
     if(file){
       if(file.type === "image/jpeg" || file.type === "image/png"){
-        const data = new FormData();
-        data.append('file', file);
-        data.append('upload_preset', 'chat-app')
-        data.append('cloudinary_name', 'cloudymedia313');
-        fetch(`https://api.cloudinary.com/v1_1/cloudymedia313/image/upload`, {
-            method: 'post',
-            body: data,
-        })
-        .then(res => res.json() )
-        .then(data => {
-            console.log(data)
-        } )
-        .catch(err => console.log(err))
+        const data1 = new FormData();                    
+        data1.append('group_img', file);       
+        
+        let {data} = await axios.post(`api/user/cloud/`, data1, config);
+
+        console.log(data)
+        
       }
     }
     else{

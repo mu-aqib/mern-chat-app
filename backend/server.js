@@ -1,6 +1,8 @@
 const express = require('express'); 
 const dotenv = require('dotenv');
 const dbConnection = require('./config/db');
+const fileUpload = require('express-fileupload')
+
 
 // routes
 const useUserRoute = require('./routes/userRoutes')
@@ -12,22 +14,33 @@ dotenv.config();
 dbConnection();
 
 const app = express();
+
+// use for recieving files and upload it into cloudinary
+app.use(fileUpload({
+    useTempFiles: true,
+}));
+
 app.use(express.json())
 
 // use routes 
 app.use('/api/user', useUserRoute);
 app.use('/api/chat', useChatRoute);
-app.use('/api/message', useMessage)
+app.use('/api/message', useMessage);
 
 // Error Handling middlewares
 app.use(notFound);
 app.use(errorHandler);
 
+app.use(express.json());
+
+
+
+
 const PORT = process.env.PORT || 5000;
 let server = app.listen(5000, console.log("now server has been started on port " + PORT)) 
 
 const io = require('socket.io')(server, {
-    pingTimeout: 60000,
+    pingTimeout: 5000,
     cors:{
         origin: 'http://localhost:3000',
     },
