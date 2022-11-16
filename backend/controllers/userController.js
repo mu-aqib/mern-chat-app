@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const userModal = require('../modal/userModal');
 const generateJWTToken = require('../config/generatToken');
 const cloudinary = require('cloudinary').v2;
-
+require('dotenv').config()
 cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME, 
     api_key: process.env.CLOUDINARY_API_KEY, 
@@ -82,7 +82,6 @@ const getAllUsers = asyncHandler( async (req, res)=>{
 
 
 const uploadCloudinaryFile = async (req,res)=>{
-    console.log(process.env.CLOUDINARY_SECRET_KEY)
     const {group_img} = req.files
     try{
 
